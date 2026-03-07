@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --kuoni-teal: #1B4F6B;
+  --kuoni-gold: #C9A96E;
+  --kuoni-light: #F8F6F3;
+  --kuoni-dark: #1A1A1A;
+}
+
+body {
+  background-color: var(--kuoni-light);
+  color: var(--kuoni-dark);
+}
+
+/* KPI Cards */
+.kpi-card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow;
+}
+
+/* Chart containers */
+.chart-card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+}
+
+/* Kuoni branded table */
+.kuoni-table th {
+  @apply bg-[#1B4F6B] text-white text-xs font-semibold uppercase tracking-wider px-4 py-3;
+}
+
+.kuoni-table td {
+  @apply px-4 py-3 text-sm border-b border-gray-100;
+}
+
+.kuoni-table tr:hover td {
+  @apply bg-[#F8F6F3];
+}
+
+/* Snowflake badge */
+.snowflake-badge {
+  @apply inline-flex items-center gap-1 bg-[#29B5E8] text-white text-xs font-medium px-2.5 py-1 rounded-full;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F8F6F3;
+}
+::-webkit-scrollbar-thumb {
+  background: #C9A96E;
+  border-radius: 3px;
+}

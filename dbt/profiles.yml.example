@@ -1,0 +1,30 @@
+kuoni_dw:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: KUONI_DBT
+      database: KUONI_DW
+      warehouse: KUONI_WH_ETL
+      schema: BRONZE
+      threads: 4
+      client_session_keep_alive: false
+      query_tag: dbt_dev
+
+    prod:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      # Use key-pair auth in production (more secure than password)
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH', '') }}"
+      private_key_passphrase: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PASSPHRASE', '') }}"
+      role: KUONI_DBT
+      database: KUONI_DW
+      warehouse: KUONI_WH_ETL
+      schema: BRONZE
+      threads: 8
+      client_session_keep_alive: false
+      query_tag: dbt_prod

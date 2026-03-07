@@ -1,0 +1,51 @@
+destination_id,destination_name,country,region,continent,tier,avg_duration_days,peak_season_start,peak_season_end,flight_hrs_from_lhr,visa_required,currency,climate_type,is_active
+DEST001,Maldives,Maldives,Indian Ocean,Asia,Ultra-Luxury,10,November,April,10,N,LOCAL,Tropical,Y
+DEST002,Seychelles,Seychelles,Indian Ocean,Africa,Ultra-Luxury,12,April,May,10,N,LOCAL,Tropical,Y
+DEST003,Bora Bora,French Polynesia,South Pacific,Oceania,Ultra-Luxury,14,May,October,22,Y,LOCAL,Tropical,Y
+DEST004,Amalfi Coast,Italy,Southern Europe,Europe,Luxury,10,May,September,3,N,EUR,Mediterranean,Y
+DEST005,Santorini,Greece,Southern Europe,Europe,Luxury,8,May,October,4,N,EUR,Mediterranean,Y
+DEST006,Tuscany,Italy,Southern Europe,Europe,Luxury,10,April,October,3,N,EUR,Mediterranean,Y
+DEST007,Cinque Terre,Italy,Southern Europe,Europe,Premium,7,June,September,3,N,EUR,Mediterranean,Y
+DEST008,Safari Kenya,Kenya,East Africa,Africa,Luxury,12,July,October,9,Y,LOCAL,Varied,Y
+DEST009,Safari Tanzania,Tanzania,East Africa,Africa,Luxury,14,June,October,10,Y,LOCAL,Varied,Y
+DEST010,Botswana Safari,Botswana,Southern Africa,Africa,Ultra-Luxury,10,May,October,11,Y,LOCAL,Tropical,Y
+DEST011,Japan,Japan,East Asia,Asia,Luxury,14,March,May,12,Y,LOCAL,Varied,Y
+DEST012,Japan Winter,Japan,East Asia,Asia,Luxury,12,December,February,12,Y,LOCAL,Varied,Y
+DEST013,Rajasthan,India,South Asia,Asia,Luxury,14,October,March,9,Y,LOCAL,Varied,Y
+DEST014,Kerala,India,South Asia,Asia,Premium,12,September,March,9,Y,LOCAL,Varied,Y
+DEST015,Sri Lanka,Sri Lanka,South Asia,Asia,Premium,14,November,April,11,Y,LOCAL,Varied,Y
+DEST016,Bali,Indonesia,Southeast Asia,Asia,Luxury,14,April,October,15,Y,LOCAL,Varied,Y
+DEST017,Phuket,Thailand,Southeast Asia,Asia,Premium,12,November,April,12,Y,LOCAL,Varied,Y
+DEST018,Vietnam,Vietnam,Southeast Asia,Asia,Premium,16,November,April,12,Y,LOCAL,Varied,Y
+DEST019,Cambodia,Cambodia,Southeast Asia,Asia,Premium,10,November,April,13,Y,USD,Varied,Y
+DEST020,Peru,Peru,South America,Americas,Luxury,16,May,October,14,Y,LOCAL,Varied,Y
+DEST021,Patagonia,Argentina,South America,Americas,Luxury,18,November,March,14,Y,LOCAL,Varied,Y
+DEST022,Galápagos,Ecuador,South America,Americas,Ultra-Luxury,12,June,November,14,Y,USD,Tropical,Y
+DEST023,Machu Picchu,Peru,South America,Americas,Luxury,14,May,October,14,Y,LOCAL,Varied,Y
+DEST024,New Zealand,New Zealand,Oceania,Oceania,Luxury,21,November,March,24,Y,LOCAL,Varied,Y
+DEST025,Australia,Australia,Oceania,Oceania,Premium,21,October,April,22,Y,LOCAL,Varied,Y
+DEST026,Canada Rockies,Canada,North America,Americas,Luxury,14,June,September,9,Y,LOCAL,Varied,Y
+DEST027,Alaska Cruise,USA,North America,Americas,Luxury,14,May,September,10,Y,USD,Varied,Y
+DEST028,Iceland,Iceland,Northern Europe,Europe,Premium,7,June,August,3,N,LOCAL,Varied,Y
+DEST029,Norway Fjords,Norway,Northern Europe,Europe,Luxury,10,May,September,3,N,LOCAL,Varied,Y
+DEST030,Svalbard,Norway,Northern Europe,Europe,Ultra-Luxury,8,February,March,4,N,LOCAL,Tropical,Y
+DEST031,Morocco,Morocco,North Africa,Africa,Premium,10,March,May,4,Y,LOCAL,Varied,Y
+DEST032,Egypt,Egypt,North Africa,Africa,Premium,10,October,April,5,Y,LOCAL,Varied,Y
+DEST033,Jordan,Jordan,Middle East,Asia,Premium,8,March,May,5,Y,LOCAL,Varied,Y
+DEST034,Oman,Oman,Middle East,Asia,Luxury,10,October,April,7,Y,LOCAL,Varied,Y
+DEST035,Dubai,UAE,Middle East,Asia,Luxury,7,October,April,7,Y,LOCAL,Varied,Y
+DEST036,Cuba,Cuba,Caribbean,Americas,Premium,12,November,April,10,Y,LOCAL,Varied,Y
+DEST037,Barbados,Barbados,Caribbean,Americas,Luxury,12,December,April,9,Y,LOCAL,Varied,Y
+DEST038,St Lucia,St Lucia,Caribbean,Americas,Luxury,12,December,April,9,Y,LOCAL,Varied,Y
+DEST039,Mauritius,Mauritius,Indian Ocean,Africa,Luxury,12,May,December,12,Y,LOCAL,Varied,Y
+DEST040,Zanzibar,Tanzania,East Africa,Africa,Premium,10,June,October,10,Y,LOCAL,Varied,Y
+DEST041,Costa Rica,Costa Rica,Central America,Americas,Premium,14,December,April,12,Y,LOCAL,Varied,Y
+DEST042,Bhutan,Bhutan,South Asia,Asia,Ultra-Luxury,10,March,May,9,Y,LOCAL,Tropical,Y
+DEST043,Myanmar,Myanmar,Southeast Asia,Asia,Luxury,14,October,March,12,Y,LOCAL,Varied,Y
+DEST044,Trans-Siberian,Russia,Eastern Europe,Europe,Luxury,16,June,September,10,Y,LOCAL,Varied,Y
+DEST045,Antarctica,Antarctica,Antarctica,Antarctica,Ultra-Luxury,14,November,March,24,Y,LOCAL,Tropical,Y
+DEST046,French Riviera,France,Southern Europe,Europe,Luxury,8,May,September,2,N,EUR,Mediterranean,Y
+DEST047,Azores,Portugal,Atlantic Islands,Europe,Premium,8,April,October,3,N,EUR,Varied,Y
+DEST048,Madeira,Portugal,Atlantic Islands,Europe,Premium,7,March,November,3,N,EUR,Varied,Y
+DEST049,Malta,Malta,Southern Europe,Europe,Premium,7,May,October,3,N,EUR,Mediterranean,Y
+DEST050,Cyprus,Cyprus,Southern Europe,Europe,Premium,10,April,October,5,N,EUR,Mediterranean,Y

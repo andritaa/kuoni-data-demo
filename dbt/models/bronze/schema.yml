@@ -1,0 +1,45 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: KUONI_DW
+    schema: BRONZE
+    description: "Raw landing layer — immutable source data from all upstream systems"
+    tables:
+      - name: RAW_BOOKINGS
+        description: "Raw booking engine data — append-only, immutable"
+        columns:
+          - name: BOOKING_ID
+            tests: [not_null, unique]
+          - name: CUSTOMER_ID
+            tests: [not_null]
+          - name: PRODUCT_ID
+            tests: [not_null]
+          - name: STATUS
+            tests:
+              - accepted_values:
+                  values: ['Confirmed', 'Completed', 'Cancelled', 'Pending']
+
+      - name: RAW_CUSTOMERS
+        description: "Raw CRM customer data from Salesforce"
+        columns:
+          - name: CUSTOMER_ID
+            tests: [not_null]
+
+      - name: RAW_DESTINATIONS
+        description: "Raw destination reference data"
+        columns:
+          - name: DESTINATION_ID
+            tests: [not_null, unique]
+
+      - name: RAW_PRODUCTS
+        description: "Raw holiday package catalogue"
+        columns:
+          - name: PRODUCT_ID
+            tests: [not_null, unique]
+
+      - name: RAW_INTERACTIONS
+        description: "Raw customer interaction events — all touchpoints"
+        columns:
+          - name: INTERACTION_ID
+            tests: [not_null, unique]

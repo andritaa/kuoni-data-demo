@@ -1,0 +1,201 @@
+product_id,product_name,destination_id,product_type,duration_days,base_price_gbp,price_band,included_flights,all_inclusive,max_group_size,min_passengers,accommodation_tier,is_active,launch_date
+PKG0001,Costa Rica Tailor-Made Discovery,DEST041,Tailor-Made,8,4506,Budget,Y,N,6,2,5-star Deluxe,Y,2021-08-05
+PKG0002,Trans-Siberian Romantic Discovery,DEST044,Honeymoon,14,9651,Mid,Y,Y,2,2,5-star Deluxe,Y,2020-01-23
+PKG0003,Kerala Personal Journey,DEST014,Tailor-Made,8,2717,Budget,N,Y,6,2,Villa,Y,2020-09-07
+PKG0004,St Lucia Bespoke Explorer,DEST038,Tailor-Made,14,8615,Mid,Y,N,6,2,5-star,Y,2020-07-22
+PKG0005,Kerala Art & Culture,DEST014,Cultural,7,3337,Budget,N,Y,6,2,4-star Boutique,Y,2021-11-01
+PKG0006,Machu Picchu Honeymoon Paradise,DEST023,Honeymoon,7,17585,Premium,N,Y,2,2,Safari Lodge,Y,2021-09-08
+PKG0007,Cambodia Expedition,DEST019,Adventure,8,5462,Mid,Y,Y,6,2,5-star,Y,2022-03-23
+PKG0008,Cyprus Bespoke Explorer,DEST050,Tailor-Made,7,4407,Budget,N,N,6,2,Villa,Y,2020-03-20
+PKG0009,Costa Rica Trekking Adventure,DEST041,Adventure,10,5532,Mid,Y,N,6,2,4-star Boutique,Y,2021-01-19
+PKG0010,Antarctica Cultural Immersion,DEST045,Cultural,12,21980,Ultra,Y,Y,6,2,5-star,Y,2020-01-28
+PKG0011,Svalbard Personal Journey,DEST030,Tailor-Made,14,15598,Premium,Y,Y,6,2,5-star,Y,2020-07-18
+PKG0012,Bora Bora Wilderness Journey,DEST003,Adventure,10,16386,Premium,Y,Y,6,2,Safari Lodge,Y,2021-04-05
+PKG0013,French Riviera Exclusive Escape,DEST046,Tailor-Made,14,12482,Premium,Y,N,6,2,5-star,Y,2020-01-25
+PKG0014,Bali Romantic Discovery,DEST016,Honeymoon,14,13395,Premium,N,N,2,2,5-star,Y,2020-06-30
+PKG0015,Safari Tanzania Small Group Adventure,DEST009,Group,7,6771,Mid,Y,N,12,2,5-star,Y,2021-08-15
+PKG0016,Trans-Siberian Small Group Adventure,DEST044,Group,14,12304,Premium,N,N,12,2,4-star Boutique,Y,2021-05-11
+PKG0017,Cuba Wildlife Safari,DEST036,Adventure,10,3438,Budget,Y,Y,6,2,4-star Boutique,Y,2020-07-19
+PKG0018,Iceland Bespoke Explorer,DEST028,Tailor-Made,8,4657,Budget,Y,N,6,2,4-star Boutique,Y,2021-06-20
+PKG0019,Costa Rica Guided Discovery,DEST041,Group,10,3752,Budget,Y,N,12,2,Safari Lodge,Y,2022-01-07
+PKG0020,Maldives Group Explorer,DEST001,Group,10,12319,Premium,Y,Y,12,2,4-star Boutique,Y,2020-01-06
+PKG0021,Bali Personal Journey,DEST016,Tailor-Made,7,7290,Mid,N,Y,6,2,Safari Lodge,Y,2022-01-04
+PKG0022,Cyprus Exclusive Escape,DEST050,Tailor-Made,8,7003,Mid,Y,N,6,2,Safari Lodge,Y,2021-09-28
+PKG0023,Iceland Culinary Tour,DEST028,Cultural,10,4147,Budget,N,N,6,2,4-star Boutique,Y,2020-11-05
+PKG0024,Norway Fjords Wilderness Journey,DEST029,Adventure,10,7982,Mid,Y,Y,6,2,4-star Boutique,Y,2020-05-21
+PKG0025,Seychelles Guided Discovery,DEST002,Group,12,21641,Ultra,Y,Y,12,2,5-star Deluxe,Y,2022-05-22
+PKG0026,French Riviera Romantic Escape,DEST046,Honeymoon,7,9235,Mid,Y,Y,2,2,Safari Lodge,Y,2020-11-02
+PKG0027,Bali Exclusive Escape,DEST016,Tailor-Made,10,9510,Mid,N,Y,6,2,Villa,Y,2020-03-25
+PKG0028,Alaska Cruise Bespoke Explorer,DEST027,Tailor-Made,12,13062,Premium,N,N,6,2,Villa,Y,2020-03-29
+PKG0029,Azores Bespoke Explorer,DEST047,Tailor-Made,12,2996,Budget,Y,Y,6,2,5-star,Y,2022-02-11
+PKG0030,Rajasthan Exclusive Escape,DEST013,Tailor-Made,14,8296,Mid,Y,N,6,2,Villa,Y,2021-07-03
+PKG0031,Bali Wildlife Safari,DEST016,Adventure,7,13260,Premium,Y,N,6,2,Safari Lodge,Y,2022-01-05
+PKG0032,Maldives Heritage Journey,DEST001,Cultural,16,14724,Premium,N,Y,6,2,Villa,Y,2021-10-26
+PKG0033,Kerala Wildlife Safari,DEST014,Adventure,12,3848,Budget,Y,N,6,2,4-star Boutique,Y,2021-05-03
+PKG0034,Svalbard Personal Journey,DEST030,Tailor-Made,16,22844,Ultra,Y,Y,6,2,5-star,Y,2022-06-05
+PKG0035,Cambodia Bespoke Explorer,DEST019,Tailor-Made,7,7244,Mid,Y,Y,6,2,5-star Deluxe,Y,2020-12-10
+PKG0036,St Lucia Classic Tour,DEST038,Group,7,8579,Mid,Y,Y,12,2,5-star Deluxe,Y,2021-05-17
+PKG0037,Mauritius Private Journey,DEST039,Tailor-Made,7,12615,Premium,Y,N,6,2,Safari Lodge,Y,2022-01-25
+PKG0038,Bora Bora Honeymoon Dream,DEST003,Honeymoon,14,29601,Ultra,Y,Y,2,2,5-star,Y,2021-07-17
+PKG0039,Myanmar Romantic Escape,DEST043,Honeymoon,14,13456,Premium,Y,N,2,2,4-star Boutique,Y,2022-02-24
+PKG0040,Svalbard Bespoke Explorer,DEST030,Tailor-Made,16,12152,Premium,Y,Y,6,2,5-star Deluxe,Y,2021-06-09
+PKG0041,Dubai Tailor-Made Discovery,DEST035,Tailor-Made,12,8170,Mid,Y,Y,6,2,4-star Boutique,Y,2021-10-03
+PKG0042,Cambodia Personal Journey,DEST019,Tailor-Made,7,4978,Budget,Y,N,6,2,5-star Deluxe,Y,2020-02-11
+PKG0043,Safari Tanzania Bespoke Explorer,DEST009,Tailor-Made,12,8546,Mid,Y,N,6,2,5-star,Y,2020-07-26
+PKG0044,French Riviera Tailor-Made Discovery,DEST046,Tailor-Made,14,14280,Premium,Y,Y,6,2,5-star Deluxe,Y,2020-09-20
+PKG0045,Costa Rica Escorted Journey,DEST041,Group,7,2861,Budget,Y,Y,12,2,4-star Boutique,Y,2020-03-13
+PKG0046,Japan Romantic Discovery,DEST011,Honeymoon,7,16909,Premium,Y,Y,2,2,5-star,Y,2020-07-31
+PKG0047,Dubai Tailor-Made Discovery,DEST035,Tailor-Made,14,8426,Mid,Y,Y,6,2,4-star Boutique,Y,2020-04-02
+PKG0048,New Zealand Wildlife Safari,DEST024,Adventure,10,11862,Premium,Y,N,6,2,5-star Deluxe,Y,2020-09-10
+PKG0049,Machu Picchu Wilderness Journey,DEST023,Adventure,10,8532,Mid,Y,Y,6,2,Villa,Y,2021-08-02
+PKG0050,Seychelles Tailor-Made Discovery,DEST002,Tailor-Made,16,24818,Ultra,Y,Y,6,2,4-star Boutique,Y,2020-11-28
+PKG0051,Japan Wildlife Safari,DEST011,Adventure,7,12267,Premium,N,Y,6,2,5-star,Y,2020-12-03
+PKG0052,Svalbard Private Journey,DEST030,Tailor-Made,10,15652,Premium,Y,Y,6,2,Villa,Y,2020-07-09
+PKG0053,Galápagos Bespoke Explorer,DEST022,Tailor-Made,14,24670,Ultra,Y,Y,6,2,Safari Lodge,Y,2020-08-31
+PKG0054,Canada Rockies Romantic Discovery,DEST026,Honeymoon,7,14852,Premium,Y,N,2,2,5-star,Y,2022-05-03
+PKG0055,St Lucia Art & Culture,DEST038,Cultural,7,6626,Mid,N,N,6,2,4-star Boutique,Y,2021-08-13
+PKG0056,Iceland Romantic Discovery,DEST028,Honeymoon,12,4481,Budget,Y,N,2,2,5-star Deluxe,Y,2021-07-08
+PKG0057,French Riviera Classic Tour,DEST046,Group,10,14821,Premium,Y,N,12,2,5-star Deluxe,Y,2020-06-04
+PKG0058,Myanmar Culinary Tour,DEST043,Cultural,7,11143,Premium,Y,N,6,2,4-star Boutique,Y,2021-10-26
+PKG0059,Myanmar Group Explorer,DEST043,Group,10,10844,Premium,Y,N,12,2,Villa,Y,2020-05-28
+PKG0060,Trans-Siberian Romantic Escape,DEST044,Honeymoon,14,14209,Premium,Y,N,2,2,4-star Boutique,Y,2020-12-11
+PKG0061,Kerala Classic Tour,DEST014,Group,10,7469,Mid,N,N,12,2,Villa,Y,2022-06-20
+PKG0062,Trans-Siberian Exclusive Escape,DEST044,Tailor-Made,7,8780,Mid,Y,N,6,2,Safari Lodge,Y,2021-08-06
+PKG0063,Galápagos Private Journey,DEST022,Tailor-Made,14,23023,Ultra,Y,Y,6,2,5-star,Y,2021-05-22
+PKG0064,Botswana Safari Private Journey,DEST010,Tailor-Made,10,19784,Premium,N,Y,6,2,Villa,Y,2021-09-15
+PKG0065,Costa Rica Group Explorer,DEST041,Group,12,6549,Mid,Y,Y,12,2,5-star Deluxe,Y,2022-02-06
+PKG0066,Malta Wildlife Safari,DEST049,Adventure,8,5982,Mid,Y,N,6,2,Safari Lodge,Y,2021-12-07
+PKG0067,Svalbard Private Journey,DEST030,Tailor-Made,16,13988,Premium,Y,Y,6,2,Villa,Y,2020-07-27
+PKG0068,Myanmar Classic Tour,DEST043,Group,14,11198,Premium,N,N,12,2,Villa,Y,2020-01-30
+PKG0069,Japan Honeymoon Dream,DEST011,Honeymoon,12,17384,Premium,Y,N,2,2,4-star Boutique,Y,2020-10-14
+PKG0070,Cyprus Wilderness Journey,DEST050,Adventure,8,7634,Mid,Y,N,6,2,5-star Deluxe,Y,2020-08-31
+PKG0071,French Riviera Tailor-Made Discovery,DEST046,Tailor-Made,12,11502,Premium,Y,Y,6,2,5-star,Y,2020-07-11
+PKG0072,Sri Lanka Private Journey,DEST015,Tailor-Made,7,4252,Budget,N,N,6,2,4-star Boutique,Y,2022-05-08
+PKG0073,Dubai Small Group Adventure,DEST035,Group,14,9388,Mid,N,N,12,2,5-star Deluxe,Y,2022-03-09
+PKG0074,Malta Group Explorer,DEST049,Group,10,2548,Budget,Y,N,12,2,Villa,Y,2020-10-13
+PKG0075,Dubai Romantic Discovery,DEST035,Honeymoon,14,12496,Premium,Y,N,2,2,Villa,Y,2021-08-20
+PKG0076,Egypt Tailor-Made Discovery,DEST032,Tailor-Made,12,7979,Mid,Y,N,6,2,5-star,Y,2020-12-26
+PKG0077,Zanzibar Group Explorer,DEST040,Group,7,7348,Mid,Y,N,12,2,Villa,Y,2022-04-13
+PKG0078,Safari Tanzania Trekking Adventure,DEST009,Adventure,12,6823,Mid,N,N,6,2,5-star,Y,2021-02-22
+PKG0079,Svalbard Exclusive Escape,DEST030,Tailor-Made,16,16558,Premium,Y,Y,6,2,5-star Deluxe,Y,2020-08-29
+PKG0080,Morocco Personal Journey,DEST031,Tailor-Made,10,2926,Budget,Y,N,6,2,5-star Deluxe,Y,2020-08-12
+PKG0081,Cyprus Cultural Immersion,DEST050,Cultural,8,2754,Budget,Y,Y,6,2,Safari Lodge,Y,2021-05-26
+PKG0082,Botswana Safari Exclusive Escape,DEST010,Tailor-Made,10,22968,Ultra,Y,Y,6,2,Villa,Y,2020-08-27
+PKG0083,Antarctica Tailor-Made Discovery,DEST045,Tailor-Made,10,14749,Premium,Y,Y,6,2,4-star Boutique,Y,2021-06-16
+PKG0084,Cinque Terre Escorted Journey,DEST007,Group,12,7216,Mid,N,N,12,2,5-star,Y,2022-03-28
+PKG0085,Santorini Guided Discovery,DEST005,Group,12,7669,Mid,Y,N,12,2,5-star Deluxe,Y,2020-12-29
+PKG0086,Machu Picchu Escorted Journey,DEST023,Group,12,7129,Mid,Y,N,12,2,Villa,Y,2020-07-18
+PKG0087,Cinque Terre Escorted Journey,DEST007,Group,12,7706,Mid,Y,N,12,2,5-star,Y,2022-06-27
+PKG0088,Azores Escorted Journey,DEST047,Group,12,7545,Mid,N,N,12,2,Safari Lodge,Y,2021-04-09
+PKG0089,Vietnam Private Journey,DEST018,Tailor-Made,10,3209,Budget,N,Y,6,2,Villa,Y,2020-03-23
+PKG0090,Barbados Honeymoon Dream,DEST037,Honeymoon,7,14964,Premium,N,N,2,2,5-star,Y,2020-02-12
+PKG0091,Egypt Tailor-Made Discovery,DEST032,Tailor-Made,10,5288,Mid,Y,N,6,2,5-star Deluxe,Y,2020-04-09
+PKG0092,Oman Cultural Immersion,DEST034,Cultural,14,9954,Mid,N,N,6,2,5-star,Y,2021-07-25
+PKG0093,Antarctica Group Explorer,DEST045,Group,10,19342,Premium,Y,Y,12,2,4-star Boutique,Y,2021-12-22
+PKG0094,Sri Lanka Guided Discovery,DEST015,Group,10,5008,Mid,N,N,12,2,Safari Lodge,Y,2021-01-19
+PKG0095,Machu Picchu Classic Tour,DEST023,Group,12,11419,Premium,N,N,12,2,4-star Boutique,Y,2020-02-27
+PKG0096,Phuket Private Journey,DEST017,Tailor-Made,7,5084,Mid,Y,Y,6,2,5-star,Y,2020-12-13
+PKG0097,Madeira Classic Tour,DEST048,Group,10,6797,Mid,Y,Y,12,2,4-star Boutique,Y,2022-06-26
+PKG0098,Sri Lanka Tailor-Made Discovery,DEST015,Tailor-Made,8,2615,Budget,Y,Y,6,2,5-star Deluxe,Y,2021-04-27
+PKG0099,Cuba Private Journey,DEST036,Tailor-Made,12,7725,Mid,Y,Y,6,2,Safari Lodge,Y,2022-06-03
+PKG0100,Cambodia Group Explorer,DEST019,Group,8,5291,Mid,Y,N,12,2,Villa,Y,2022-02-23
+PKG0101,Safari Kenya Wilderness Journey,DEST008,Adventure,7,14056,Premium,Y,Y,6,2,5-star,Y,2020-01-11
+PKG0102,Barbados Cultural Immersion,DEST037,Cultural,7,10066,Premium,N,N,6,2,Safari Lodge,Y,2021-10-18
+PKG0103,Zanzibar Personal Journey,DEST040,Tailor-Made,12,5616,Mid,N,N,6,2,Safari Lodge,Y,2021-09-13
+PKG0104,Iceland Personal Journey,DEST028,Tailor-Made,7,2993,Budget,Y,N,6,2,5-star,Y,2021-05-04
+PKG0105,Phuket Romantic Escape,DEST017,Honeymoon,8,5803,Mid,Y,Y,2,2,5-star Deluxe,Y,2020-08-31
+PKG0106,Alaska Cruise Classic Tour,DEST027,Group,12,13699,Premium,Y,Y,12,2,4-star Boutique,Y,2021-08-06
+PKG0107,French Riviera Exclusive Escape,DEST046,Tailor-Made,10,7166,Mid,Y,N,6,2,Safari Lodge,Y,2020-04-11
+PKG0108,Myanmar Trekking Adventure,DEST043,Adventure,7,12965,Premium,Y,N,6,2,5-star,Y,2021-01-31
+PKG0109,Vietnam Wildlife Safari,DEST018,Adventure,8,2988,Budget,Y,N,6,2,Safari Lodge,Y,2021-02-17
+PKG0110,Cambodia Group Explorer,DEST019,Group,12,4991,Budget,Y,N,12,2,Safari Lodge,Y,2022-05-18
+PKG0111,Egypt Classic Tour,DEST032,Group,12,2826,Budget,Y,N,12,2,4-star Boutique,Y,2022-03-08
+PKG0112,Seychelles Personal Journey,DEST002,Tailor-Made,10,21619,Ultra,Y,Y,6,2,Safari Lodge,Y,2020-08-27
+PKG0113,Bora Bora Trekking Adventure,DEST003,Adventure,16,19708,Premium,Y,Y,6,2,5-star,Y,2021-04-01
+PKG0114,St Lucia Group Explorer,DEST038,Group,14,7494,Mid,Y,N,12,2,4-star Boutique,Y,2020-06-11
+PKG0115,Patagonia Romantic Escape,DEST021,Honeymoon,14,14823,Premium,N,N,2,2,Villa,Y,2022-04-11
+PKG0116,Malta Group Explorer,DEST049,Group,10,3221,Budget,Y,N,12,2,5-star Deluxe,Y,2022-03-04
+PKG0117,Cyprus Classic Tour,DEST050,Group,12,2509,Budget,N,Y,12,2,5-star,Y,2020-09-28
+PKG0118,Oman Exclusive Escape,DEST034,Tailor-Made,7,13242,Premium,Y,N,6,2,Safari Lodge,Y,2021-08-05
+PKG0119,Safari Tanzania Historical Discovery,DEST009,Cultural,7,13941,Premium,Y,N,6,2,Safari Lodge,Y,2021-07-08
+PKG0120,Bali Love & Luxury,DEST016,Honeymoon,14,8091,Mid,Y,Y,2,2,5-star Deluxe,Y,2020-05-19
+PKG0121,Svalbard Heritage Journey,DEST030,Cultural,14,20165,Ultra,Y,Y,6,2,Villa,Y,2021-11-25
+PKG0122,Morocco Heritage Journey,DEST031,Cultural,8,6241,Mid,N,Y,6,2,Safari Lodge,Y,2021-05-06
+PKG0123,Jordan Romantic Escape,DEST033,Honeymoon,10,3992,Budget,N,N,2,2,Safari Lodge,Y,2021-12-10
+PKG0124,Vietnam Active Explorer,DEST018,Adventure,12,4945,Budget,Y,N,6,2,Safari Lodge,Y,2021-04-28
+PKG0125,Morocco Personal Journey,DEST031,Tailor-Made,12,6951,Mid,N,N,6,2,5-star,Y,2020-01-01
+PKG0126,Antarctica Exclusive Escape,DEST045,Tailor-Made,16,15826,Premium,Y,Y,6,2,4-star Boutique,Y,2020-10-22
+PKG0127,Madeira Group Explorer,DEST048,Group,8,5662,Mid,N,Y,12,2,5-star,Y,2020-01-18
+PKG0128,Jordan Art & Culture,DEST033,Cultural,12,3322,Budget,Y,N,6,2,Villa,Y,2022-04-26
+PKG0129,Maldives Honeymoon Dream,DEST001,Honeymoon,12,29545,Ultra,Y,Y,2,2,Villa,Y,2022-03-11
+PKG0130,Phuket Exclusive Escape,DEST017,Tailor-Made,7,7823,Mid,Y,N,6,2,Safari Lodge,Y,2022-01-27
+PKG0131,Australia Historical Discovery,DEST025,Cultural,7,6932,Mid,Y,Y,6,2,4-star Boutique,Y,2020-10-07
+PKG0132,Sri Lanka Honeymoon Dream,DEST015,Honeymoon,7,4297,Budget,N,Y,2,2,4-star Boutique,Y,2020-02-22
+PKG0133,Seychelles Bespoke Explorer,DEST002,Tailor-Made,14,16806,Premium,Y,Y,6,2,Villa,Y,2022-03-10
+PKG0134,Botswana Safari Exclusive Escape,DEST010,Tailor-Made,12,21272,Ultra,Y,Y,6,2,5-star,Y,2022-05-12
+PKG0135,Tuscany Honeymoon Dream,DEST006,Honeymoon,14,12928,Premium,Y,Y,2,2,Villa,Y,2020-03-19
+PKG0136,Costa Rica Tailor-Made Discovery,DEST041,Tailor-Made,7,7962,Mid,N,N,6,2,Safari Lodge,Y,2021-03-18
+PKG0137,Japan Tailor-Made Discovery,DEST011,Tailor-Made,14,10901,Premium,Y,N,6,2,4-star Boutique,Y,2020-03-04
+PKG0138,Rajasthan Historical Discovery,DEST013,Cultural,10,7747,Mid,N,N,6,2,4-star Boutique,Y,2021-11-23
+PKG0139,Barbados Tailor-Made Discovery,DEST037,Tailor-Made,14,6359,Mid,Y,Y,6,2,Safari Lodge,Y,2021-11-28
+PKG0140,Trans-Siberian Wildlife Safari,DEST044,Adventure,12,14138,Premium,Y,N,6,2,4-star Boutique,Y,2020-04-26
+PKG0141,Sri Lanka Romantic Discovery,DEST015,Honeymoon,8,5918,Mid,Y,N,2,2,5-star Deluxe,Y,2021-03-08
+PKG0142,Peru Wildlife Safari,DEST020,Adventure,10,11977,Premium,Y,N,6,2,4-star Boutique,Y,2021-05-15
+PKG0143,Madeira Guided Discovery,DEST048,Group,10,3582,Budget,Y,Y,12,2,4-star Boutique,Y,2020-08-29
+PKG0144,Morocco Art & Culture,DEST031,Cultural,7,5274,Mid,N,Y,6,2,5-star,Y,2022-03-05
+PKG0145,Malta Historical Discovery,DEST049,Cultural,10,7065,Mid,Y,N,6,2,5-star Deluxe,Y,2021-01-20
+PKG0146,Phuket Group Explorer,DEST017,Group,10,5519,Mid,N,N,12,2,4-star Boutique,Y,2020-07-11
+PKG0147,Cinque Terre Honeymoon Dream,DEST007,Honeymoon,10,3516,Budget,Y,N,2,2,5-star Deluxe,Y,2021-05-06
+PKG0148,Costa Rica Active Explorer,DEST041,Adventure,12,7818,Mid,Y,Y,6,2,5-star Deluxe,Y,2021-10-26
+PKG0149,Bora Bora Exclusive Escape,DEST003,Tailor-Made,10,13902,Premium,Y,Y,6,2,Safari Lodge,Y,2020-07-02
+PKG0150,Safari Tanzania Tailor-Made Discovery,DEST009,Tailor-Made,14,14850,Premium,Y,N,6,2,5-star Deluxe,Y,2020-10-10
+PKG0151,Egypt Love & Luxury,DEST032,Honeymoon,10,3598,Budget,Y,N,2,2,Villa,Y,2022-06-25
+PKG0152,Bali Wildlife Safari,DEST016,Adventure,12,12018,Premium,Y,N,6,2,4-star Boutique,Y,2021-08-15
+PKG0153,Rajasthan Historical Discovery,DEST013,Cultural,10,7501,Mid,Y,Y,6,2,4-star Boutique,Y,2021-02-03
+PKG0154,Bali Culinary Tour,DEST016,Cultural,7,9362,Mid,Y,N,6,2,5-star,Y,2021-04-16
+PKG0155,Sri Lanka Private Journey,DEST015,Tailor-Made,7,7382,Mid,Y,Y,6,2,5-star,Y,2020-04-20
+PKG0156,Dubai Private Journey,DEST035,Tailor-Made,7,7801,Mid,Y,Y,6,2,4-star Boutique,Y,2020-07-23
+PKG0157,Bali Small Group Adventure,DEST016,Group,12,8854,Mid,Y,Y,12,2,Villa,Y,2020-11-03
+PKG0158,Oman Bespoke Explorer,DEST034,Tailor-Made,14,13802,Premium,Y,N,6,2,Safari Lodge,Y,2021-06-19
+PKG0159,Cinque Terre Guided Discovery,DEST007,Group,7,7538,Mid,Y,N,12,2,5-star Deluxe,Y,2020-07-28
+PKG0160,Amalfi Coast Historical Discovery,DEST004,Cultural,7,12984,Premium,N,N,6,2,Villa,Y,2020-07-19
+PKG0161,Santorini Active Explorer,DEST005,Adventure,7,8430,Mid,Y,N,6,2,Safari Lodge,Y,2020-03-05
+PKG0162,Costa Rica Escorted Journey,DEST041,Group,10,5620,Mid,N,N,12,2,Safari Lodge,Y,2021-07-28
+PKG0163,Iceland Bespoke Explorer,DEST028,Tailor-Made,8,7863,Mid,N,N,6,2,5-star,Y,2020-07-27
+PKG0164,Alaska Cruise Exclusive Escape,DEST027,Tailor-Made,14,12532,Premium,Y,N,6,2,Villa,Y,2022-04-04
+PKG0165,Patagonia Love & Luxury,DEST021,Honeymoon,14,11050,Premium,Y,Y,2,2,5-star Deluxe,Y,2022-02-22
+PKG0166,Tuscany Escorted Journey,DEST006,Group,7,8131,Mid,Y,N,12,2,5-star Deluxe,Y,2020-03-05
+PKG0167,Alaska Cruise Exclusive Escape,DEST027,Tailor-Made,12,6842,Mid,Y,N,6,2,5-star Deluxe,Y,2020-08-04
+PKG0168,Barbados Guided Discovery,DEST037,Group,10,13900,Premium,Y,N,12,2,Safari Lodge,Y,2021-09-01
+PKG0169,New Zealand Tailor-Made Discovery,DEST024,Tailor-Made,14,9705,Mid,Y,N,6,2,4-star Boutique,Y,2020-07-14
+PKG0170,Seychelles Tailor-Made Discovery,DEST002,Tailor-Made,14,17567,Premium,Y,Y,6,2,5-star,Y,2020-04-30
+PKG0171,Botswana Safari Group Explorer,DEST010,Group,12,13140,Premium,Y,Y,12,2,5-star Deluxe,Y,2022-05-02
+PKG0172,Madeira Group Explorer,DEST048,Group,12,5939,Mid,Y,Y,12,2,4-star Boutique,Y,2021-06-04
+PKG0173,Peru Romantic Discovery,DEST020,Honeymoon,7,9608,Mid,Y,Y,2,2,Safari Lodge,Y,2021-03-06
+PKG0174,Amalfi Coast Love & Luxury,DEST004,Honeymoon,14,17236,Premium,N,N,2,2,Villa,Y,2021-12-15
+PKG0175,Alaska Cruise Personal Journey,DEST027,Tailor-Made,12,7864,Mid,N,Y,6,2,4-star Boutique,Y,2022-01-05
+PKG0176,Trans-Siberian Honeymoon Dream,DEST044,Honeymoon,12,19022,Premium,Y,Y,2,2,Villa,Y,2020-06-22
+PKG0177,Mauritius Private Journey,DEST039,Tailor-Made,10,10938,Premium,Y,N,6,2,4-star Boutique,Y,2020-03-29
+PKG0178,Patagonia Exclusive Escape,DEST021,Tailor-Made,10,13055,Premium,Y,N,6,2,Safari Lodge,Y,2021-01-27
+PKG0179,French Riviera Personal Journey,DEST046,Tailor-Made,7,11802,Premium,N,N,6,2,5-star Deluxe,Y,2021-01-20
+PKG0180,Iceland Bespoke Explorer,DEST028,Tailor-Made,12,5064,Mid,N,N,6,2,Villa,Y,2021-03-01
+PKG0181,Cambodia Bespoke Explorer,DEST019,Tailor-Made,8,5160,Mid,N,N,6,2,4-star Boutique,Y,2021-10-26
+PKG0182,Tuscany Small Group Adventure,DEST006,Group,14,9986,Mid,N,N,12,2,5-star Deluxe,Y,2021-09-05
+PKG0183,Canada Rockies Active Explorer,DEST026,Adventure,12,9630,Mid,Y,Y,6,2,Safari Lodge,Y,2022-06-15
+PKG0184,Costa Rica Personal Journey,DEST041,Tailor-Made,10,4088,Budget,Y,N,6,2,5-star,Y,2020-03-30
+PKG0185,Bali Tailor-Made Discovery,DEST016,Tailor-Made,10,9232,Mid,Y,N,6,2,5-star Deluxe,Y,2021-01-01
+PKG0186,Japan Winter Historical Discovery,DEST012,Cultural,14,13601,Premium,Y,N,6,2,4-star Boutique,Y,2020-11-05
+PKG0187,Botswana Safari Group Explorer,DEST010,Group,14,19245,Premium,Y,Y,12,2,Safari Lodge,Y,2022-02-23
+PKG0188,Amalfi Coast Bespoke Explorer,DEST004,Tailor-Made,14,11085,Premium,N,Y,6,2,5-star Deluxe,Y,2020-08-14
+PKG0189,New Zealand Wildlife Safari,DEST024,Adventure,14,7479,Mid,N,N,6,2,Safari Lodge,Y,2020-06-22
+PKG0190,Madeira Wilderness Journey,DEST048,Adventure,8,7183,Mid,Y,N,6,2,Villa,Y,2021-02-12
+PKG0191,Jordan Bespoke Explorer,DEST033,Tailor-Made,7,6190,Mid,Y,N,6,2,5-star Deluxe,Y,2021-01-19
+PKG0192,Jordan Honeymoon Paradise,DEST033,Honeymoon,12,5887,Mid,N,N,2,2,Safari Lodge,Y,2020-09-10
+PKG0193,Zanzibar Tailor-Made Discovery,DEST040,Tailor-Made,12,4817,Budget,N,N,6,2,Safari Lodge,Y,2020-08-15
+PKG0194,Amalfi Coast Active Explorer,DEST004,Adventure,12,7079,Mid,Y,N,6,2,Villa,Y,2022-04-21
+PKG0195,Cambodia Personal Journey,DEST019,Tailor-Made,10,3731,Budget,Y,N,6,2,5-star,Y,2021-02-07
+PKG0196,Machu Picchu Exclusive Escape,DEST023,Tailor-Made,7,8112,Mid,Y,N,6,2,Villa,Y,2022-02-23
+PKG0197,Bhutan Trekking Adventure,DEST042,Adventure,10,22979,Ultra,N,Y,6,2,Safari Lodge,Y,2021-05-16
+PKG0198,New Zealand Tailor-Made Discovery,DEST024,Tailor-Made,10,8953,Mid,Y,N,6,2,5-star,Y,2020-02-16
+PKG0199,Sri Lanka Heritage Journey,DEST015,Cultural,10,3132,Budget,Y,N,6,2,Safari Lodge,Y,2022-06-29
+PKG0200,Madeira Wildlife Safari,DEST048,Adventure,10,7922,Mid,Y,N,6,2,Villa,Y,2022-01-31

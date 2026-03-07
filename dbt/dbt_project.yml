@@ -1,0 +1,55 @@
+name: 'kuoni_dw'
+version: '1.0.0'
+config-version: 2
+
+profile: 'kuoni_dw'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Global model configs
+models:
+  kuoni_dw:
+    # Bronze — raw views (no materialisation needed, source-controlled)
+    bronze:
+      +schema: BRONZE
+      +materialized: view
+      +tags: ["bronze", "raw"]
+    
+    # Silver — tables with incremental refresh
+    silver:
+      +schema: SILVER
+      +materialized: table
+      +tags: ["silver", "conformed"]
+      dims:
+        +materialized: table
+      facts:
+        +materialized: incremental
+        +unique_key: booking_id
+    
+    # Gold — tables for BI performance, views where freshness required
+    gold:
+      +schema: GOLD
+      +materialized: table
+      +tags: ["gold", "analytics"]
+
+# Sources (defined in schema.yml files)
+# Tests configuration
+tests:
+  +store_failures: true
+  +severity: warn
+
+vars:
+  # Parameterise date ranges for backfills
+  start_date: '2022-01-01'
+  end_date: '2024-12-31'
+  kuoni_database: KUONI_DW

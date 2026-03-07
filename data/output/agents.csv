@@ -1,0 +1,21 @@
+agent_id,agent_name,branch_code,branch_name,specialisation,hire_date,is_active
+AGT001,Sophie Williams,LON003,London City,Far East & Asia,2022-04-06,Y
+AGT002,James Hartley,LON003,London City,Far East & Asia,2021-12-10,Y
+AGT003,Emma Thompson,OXF001,Oxford Street,Indian Ocean & Maldives,2021-05-11,Y
+AGT004,Oliver Davies,BRS001,Bristol Clifton,World Cruises,2016-03-31,Y
+AGT005,Charlotte Baker,LON004,London Canary Wharf,Tailor-Made Journeys,2018-08-22,Y
+AGT006,Harry Wilson,LEE001,Leeds Victoria Quarter,Europe & Mediterranean,2016-08-08,Y
+AGT007,Isabella Moore,OXF001,Oxford Street,Americas & Caribbean,2018-01-02,Y
+AGT008,George Taylor,CAM001,Cambridge,Americas & Caribbean,2015-06-10,Y
+AGT009,Amelia Johnson,MCH001,Manchester Spinningfields,Tailor-Made Journeys,2017-11-03,Y
+AGT010,William Anderson,LON004,London Canary Wharf,World Cruises,2022-05-20,Y
+AGT011,Lucy Brown,LEE001,Leeds Victoria Quarter,Tailor-Made Journeys,2016-12-26,Y
+AGT012,Jack Robinson,OXF001,Oxford Street,Europe & Mediterranean,2020-11-16,Y
+AGT013,Poppy Martin,BRS001,Bristol Clifton,Adventure & Expedition,2018-05-30,Y
+AGT014,Thomas Lee,LON003,London City,Americas & Caribbean,2018-03-03,Y
+AGT015,Grace Walker,LEE001,Leeds Victoria Quarter,Far East & Asia,2022-03-05,Y
+AGT016,Benjamin Hall,MCH001,Manchester Spinningfields,Indian Ocean & Maldives,2022-06-17,Y
+AGT017,Lily Allen,OXF001,Oxford Street,World Cruises,2019-03-02,Y
+AGT018,Charlie Wright,CAM001,Cambridge,Safari & Wildlife Africa,2020-05-20,Y
+AGT019,Mia Scott,CAM001,Cambridge,Safari & Wildlife Africa,2016-02-28,Y
+AGT020,Daniel Lewis,MCH001,Manchester Spinningfields,Safari & Wildlife Africa,2017-03-23,Y
