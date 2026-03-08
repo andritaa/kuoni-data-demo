@@ -167,6 +167,105 @@ export default function Architecture() {
         </div>
       </Section>
 
+      {/* Data Architecture Integration Diagram */}
+      <Section title="How It All Connects — DV2.0 · Star Schema · Data Products" icon="🔗">
+        <div className="flex items-start gap-4 mb-6 p-4 rounded-xl" style={{background:'#EBF4F8',border:'1px solid #B8D4E0'}}>
+          <div className="text-2xl">💡</div>
+          <p className="text-sm text-gray-700">These three patterns are <strong>not alternatives</strong> — they solve different problems and work together as layers. Data Vault provides source resilience. Star Schema provides query performance. Data Products provide domain ownership and consumer contracts.</p>
+        </div>
+
+        {/* Full pipeline */}
+        <div className="grid grid-cols-6 gap-0 mb-8">
+          {[
+            { label:'🥉 BRONZE', sub:'Raw Sources', color:'#CD7F32', bg:'#FDF5EC', border:'#E8C88A',
+              points:['Unmodified source data','Full history retained','Never overwrite, only append','Snowpipe / Fivetran loads'] },
+            { label:'🥈 SILVER', sub:'Data Vault 2.0', color:'#7B8FA0', bg:'#F0F4F8', border:'#B8C8D8',
+              points:['Hubs — business keys','Links — relationships','Satellites — context + history','Source-system agnostic'] },
+            { label:'🥇 GOLD', sub:'Star Schema', color:'#C9A96E', bg:'#FEF9EF', border:'#E8D5A0',
+              points:['FCT_BOOKING (8K rows)','6 conformed dimensions','Optimised for BI queries','Surrogate keys + SCD2'] },
+            { label:'📦 PRODUCTS', sub:'Data Mesh', color:'#1B4F6B', bg:'#EBF4F8', border:'#B8D4E0',
+              points:['Governed SECURE VIEWs','SLA-backed contracts','Domain team ownership','Object tagged (Horizon)'] },
+            { label:'📊 CONSUME', sub:'BI & Analytics', color:'#27AE60', bg:'#EDFAF2', border:'#A8DFBE',
+              points:['Power BI DirectQuery','Snowsight dashboards','Snowpark ML models','API consumers'] },
+          ].map((layer, i, arr) => (
+            <React.Fragment key={layer.label}>
+              <div className="rounded-xl p-4 border" style={{background:layer.bg, borderColor:layer.border}}>
+                <div className="text-center mb-3">
+                  <div className="font-bold text-xs" style={{color:layer.color}}>{layer.label}</div>
+                  <div className="text-xs text-gray-400">{layer.sub}</div>
+                </div>
+                <ul className="space-y-1">
+                  {layer.points.map(p => (
+                    <li key={p} className="text-xs text-gray-600 flex items-start gap-1">
+                      <span style={{color:layer.color}} className="mt-0.5 flex-shrink-0">·</span>{p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {i < arr.length - 1 && (
+                <div className="flex items-center justify-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="text-gray-300 text-lg">→</div>
+                  </div>
+                </div>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* What each layer solves */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          {[
+            { title:'Data Vault 2.0 — Silver', color:'#7B8FA0', bg:'#F0F4F8', icon:'🥈',
+              problem:'Source system changes break everything downstream',
+              solution:'Hubs capture business keys. Satellites capture context. If the booking system changes schema, you only update the Satellite — Hubs, Links, and everything above stays stable.',
+              tables:['HUB_CUSTOMER','HUB_BOOKING','HUB_DESTINATION','LINK_BOOKING_CUSTOMER','SAT_BOOKING_DETAILS','SAT_CUSTOMER_PROFILE'],
+            },
+            { title:'Star Schema — Gold', color:'#C9A96E', bg:'#FEF9EF', icon:'🥇',
+              problem:'Data Vault is too normalised for fast BI queries',
+              solution:'Flatten DV2.0 into a wide fact table + conformed dimensions. Power BI and Snowsight get sub-second aggregations. Surrogate keys and SCD2 on DIM_CUSTOMER and DIM_AGENT track history.',
+              tables:['FCT_BOOKING (8K)','DIM_DATE (4,018)','DIM_CUSTOMER (2K)','DIM_DESTINATION (50)','DIM_AGENT (20)','DIM_CHANNEL (4)'],
+            },
+            { title:'Data Products — DATA_PRODUCTS', color:'#1B4F6B', bg:'#EBF4F8', icon:'📦',
+              problem:'Star Schema tables are shared but not governed — anyone can query anything',
+              solution:'Domain teams publish SECURE VIEWs as contracts. PII is masked, SLAs are defined, ownership is tagged. Consumers get a stable API — they never touch the underlying fact or dim tables directly.',
+              tables:['DP_CUSTOMER_360','DP_BOOKING_INTELLIGENCE','DP_DESTINATION_PERFORMANCE','DP_AGENT_SCORECARD','DP_EXECUTIVE_KPIS'],
+            },
+          ].map(layer => (
+            <div key={layer.title} className="rounded-xl p-5 border" style={{background:layer.bg, borderColor:layer.color+'40'}}>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xl">{layer.icon}</span>
+                <h3 className="text-xs font-bold" style={{color:layer.color}}>{layer.title}</h3>
+              </div>
+              <div className="mb-3">
+                <p className="text-xs font-semibold text-red-500 mb-1">❌ Problem it solves</p>
+                <p className="text-xs text-gray-600 italic">{layer.problem}</p>
+              </div>
+              <div className="mb-3">
+                <p className="text-xs font-semibold mb-1" style={{color:layer.color}}>✅ How</p>
+                <p className="text-xs text-gray-700">{layer.solution}</p>
+              </div>
+              <div className="pt-3 border-t" style={{borderColor:layer.color+'20'}}>
+                <p className="text-xs text-gray-400 mb-1 font-semibold">Kuoni tables</p>
+                <div className="flex flex-wrap gap-1">
+                  {layer.tables.map(t => (
+                    <span key={t} className="text-xs font-mono px-1.5 py-0.5 rounded" style={{background:layer.color+'15',color:layer.color}}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* The interview quote */}
+        <div className="rounded-xl p-5" style={{background:`linear-gradient(135deg, #1A2D55 0%, #1B4F6B 100%)`}}>
+          <p className="text-xs text-white/50 font-semibold uppercase tracking-wider mb-2">The architectural rationale</p>
+          <p className="text-white text-sm leading-relaxed">
+            <span style={{color:GOLD}}>"</span>Data Vault gives us <strong className="text-white">resilience</strong> — if Kuoni migrates from one booking system to another, only the Silver layer needs updating. The Star Schema gives analysts and Power BI <strong className="text-white">performance</strong> — sub-second aggregations on 8,000+ bookings. And Data Products give domain teams <strong className="text-white">ownership</strong> — the CRM team publishes Customer 360 with a GOLD SLA and PII masking, and no downstream consumer ever touches the raw tables. These aren't alternatives. They're a pipeline — and this is what a mature Snowflake platform looks like.<span style={{color:GOLD}}>"</span>
+          </p>
+        </div>
+      </Section>
+
       {/* Roadmap */}
       <Section title="Strategic Roadmap" icon="🗺️">
         <div className="flex gap-2 mb-6">
