@@ -1,15 +1,6 @@
-FROM node:20-alpine AS builder
-WORKDIR /app
-# Copy everything first so ANY file change busts the build cache
-COPY . .
-RUN npm install
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
-RUN npm run build
-
 FROM node:20-alpine
 RUN npm install -g serve
 WORKDIR /app
-COPY --from=builder /app/dist ./dist
+COPY dist ./dist
 EXPOSE 3000
 CMD ["serve", "-s", "dist", "-l", "3000"]
