@@ -4,6 +4,7 @@ import Architecture from './pages/Architecture'
 import DbxMapping from './pages/DbxMapping'
 import DataQuality from './pages/DataQuality'
 import ELDM from './pages/ELDM'
+import SchemaDesign from './pages/SchemaDesign'
 
 const TEAL = '#1B4F6B'
 const GOLD = '#C9A96E'
@@ -12,7 +13,7 @@ const NAV = [
   { id: 'dashboard', label: '📊 Dashboard', sub: 'Live Snowflake Data' },
   { id: 'architecture', label: '🏗️ Architecture', sub: 'Platform Strategy' },
   { id: 'dq', label: '🔍 Data Quality', sub: 'DQ Scorecard' },
-  { id: 'eldm', label: '📐 Data Model', sub: 'ELDM' },
+  { id: 'schema', label: '📐 Schema Design', sub: 'Star Schema · DV2.0' },
   { id: 'databricks', label: '⚡ Databricks → SF', sub: 'Capability Mapping' },
 ]
 
@@ -67,7 +68,7 @@ export default function App() {
       {page === 'dashboard' && <Dashboard />}
       {page === 'architecture' && <Architecture />}
       {page === 'dq' && <DataQuality />}
-      {page === 'eldm' && <ELDM />}
+      {page === 'schema' && <SchemaDesign />}
       {page === 'databricks' && <DbxMapping />}
     </div>
   )
