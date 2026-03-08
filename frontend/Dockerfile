@@ -2,6 +2,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package.json ./
 RUN npm install
+# Cache bust — forces full rebuild on every deploy
+ARG CACHEBUST=1
 COPY . .
 ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
