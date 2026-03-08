@@ -62,10 +62,10 @@ export default function Dashboard() {
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={revenue} margin={{top:5,right:10,left:0,bottom:5}}>
               <CartesianGrid strokeDasharray="3 3" stroke="#F0F0F0"/>
-              <XAxis dataKey="month" tick={{fontSize:10}} tickFormatter={v=>v?.slice(2,7)||''}/>
-              <YAxis tick={{fontSize:10}} tickFormatter={v=>`£${(v/1000).toFixed(0)}k`}/>
-              <Tooltip formatter={(v)=>[fmt(v),'Revenue']} labelFormatter={l=>l?.slice(0,7)||''}/>
-              <Line type="monotone" dataKey="revenue_gbp" stroke={TEAL} strokeWidth={2.5} dot={false}/>
+              <XAxis dataKey="year_month" tick={{fontSize:10}} tickFormatter={v=>v?.slice(2,7)||''}/>
+              <YAxis tick={{fontSize:10}} tickFormatter={v=>`£${(v/1000000).toFixed(1)}M`}/>
+              <Tooltip formatter={(v)=>[fmt(v),'Revenue']} labelFormatter={l=>l||''}/>
+              <Line type="monotone" dataKey="total_revenue_gbp" stroke={TEAL} strokeWidth={2.5} dot={false}/>
             </LineChart>
           </ResponsiveContainer>
         </div>
