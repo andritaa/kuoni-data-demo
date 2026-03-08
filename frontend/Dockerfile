@@ -1,6 +1,6 @@
 FROM node:20-alpine
 ARG CACHEBUST=1
-RUN echo "Build ID: $CACHEBUST" && npm install -g serve
+RUN echo "Deploy ID: $CACHEBUST" && npm install -g serve
 WORKDIR /app
 COPY dist ./dist
 EXPOSE 3000
