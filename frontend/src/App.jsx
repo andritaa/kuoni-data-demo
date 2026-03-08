@@ -5,6 +5,7 @@ import DbxMapping from './pages/DbxMapping'
 import DataQuality from './pages/DataQuality'
 import ELDM from './pages/ELDM'
 import SchemaDesign from './pages/SchemaDesign'
+import DataProducts from './pages/DataProducts'
 
 const TEAL = '#1B4F6B'
 const GOLD = '#C9A96E'
@@ -14,6 +15,7 @@ const NAV = [
   { id: 'architecture', label: '🏗️ Architecture', sub: 'Platform Strategy' },
   { id: 'dq', label: '🔍 Data Quality', sub: 'DQ Scorecard' },
   { id: 'schema', label: '📐 Schema Design', sub: 'Star Schema · DV2.0' },
+  { id: 'products', label: '📦 Data Products', sub: 'Data Mesh Catalogue' },
   { id: 'databricks', label: '⚡ Databricks → SF', sub: 'Capability Mapping' },
 ]
 
@@ -69,6 +71,7 @@ export default function App() {
       {page === 'architecture' && <Architecture />}
       {page === 'dq' && <DataQuality />}
       {page === 'schema' && <SchemaDesign />}
+      {page === 'products' && <DataProducts />}
       {page === 'databricks' && <DbxMapping />}
     </div>
   )
