@@ -6,6 +6,7 @@ import DataQuality from './pages/DataQuality'
 import ELDM from './pages/ELDM'
 import SchemaDesign from './pages/SchemaDesign'
 import DataProducts from './pages/DataProducts'
+import CIO from './pages/CIO'
 
 const TEAL = '#1B4F6B'
 const GOLD = '#C9A96E'
@@ -20,7 +21,11 @@ const NAV = [
 ]
 
 export default function App() {
-  const [page, setPage] = useState('dashboard')
+  const urlPage = new URLSearchParams(window.location.search).get('page')
+  const [page, setPage] = useState(urlPage || 'dashboard')
+
+  // If ?page=cio, show CIO page with no nav chrome
+  if (page === 'cio') return <CIO />
 
   return (
     <div className="min-h-screen" style={{ background: '#F8F6F3' }}>
