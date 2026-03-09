@@ -5,4 +5,4 @@ WORKDIR /app
 COPY dist ./dist
 EXPOSE 3000
 CMD ["serve", "-s", "dist", "-l", "3000"]
-# cache-bust: 1772990495
+# cache-bust: 1773071122
