@@ -1,8 +1,11 @@
 FROM node:20-alpine
-ARG CACHEBUST=1
-RUN echo "Build ID: $CACHEBUST" && npm install -g serve
 WORKDIR /app
-COPY dist ./dist
+COPY package.json package-lock.json* ./
+RUN npm install
+COPY . .
+ARG VITE_API_URL=https://backend-production-54bd.up.railway.app
+ENV VITE_API_URL=$VITE_API_URL
+RUN npm run build
+RUN npm install -g serve
 EXPOSE 3000
 CMD ["serve", "-s", "dist", "-l", "3000"]
-# cache-bust: 1773071122
