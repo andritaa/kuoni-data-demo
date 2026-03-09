@@ -18,6 +18,7 @@ const NAV = [
   { id: 'schema', label: '📐 Schema Design', sub: 'Star Schema · DV2.0' },
   { id: 'products', label: '📦 Data Products', sub: 'Data Mesh Catalogue' },
   { id: 'databricks', label: '⚡ Databricks → SF', sub: 'Capability Mapping' },
+  { id: 'cio', label: '🎯 CIO Briefing', sub: 'Strategic Roadmap' },
 ]
 
 export default function App() {
@@ -78,6 +79,7 @@ export default function App() {
       {page === 'schema' && <SchemaDesign />}
       {page === 'products' && <DataProducts />}
       {page === 'databricks' && <DbxMapping />}
+  {page === 'cio' && <CIO />}
     </div>
   )
 }
