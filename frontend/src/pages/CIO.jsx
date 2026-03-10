@@ -122,6 +122,32 @@ export default function CIO() {
           ↑ These are the same KPIs from the 📊 Dashboard tab — your data, live, in production
         </p>
 
+        {/* ── GRANT'S 5 COMMERCIAL CHALLENGES ── */}
+        <div style={{ marginBottom: 40 }}>
+          <SectionTitle title="Five commercial challenges this platform solves" sub="Built specifically around Kuoni's real strategic priorities — not generic data platform features" />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 14, marginBottom: 16 }}>
+            {[
+              { num: '01', title: 'DERTOUR Group Alignment', icon: '🏛️', color: TEAL,
+                detail: 'Every data product and pipeline is architected to connect to group-level reporting. Kuoni UK becomes the blueprint for DERTOUR Northern Europe — not a local island.' },
+              { num: '02', title: 'Personalisation at Scale', icon: '🎯', color: '#0F766E',
+                detail: 'Customer 360 turns bespoke holiday expertise into data-driven personalisation. What your consultants do intuitively — the platform makes systematic and scalable.' },
+              { num: '03', title: 'OTA Competitive Defence', icon: '⚔️', color: '#92400E',
+                detail: 'Booking.com has data advantage. This platform closes the gap — real-time customer intelligence, destination performance, and booking pattern insight that premium operators need.' },
+              { num: '04', title: 'Agent Network Visibility', icon: '📊', color: '#6D28D9',
+                detail: 'Agent Scorecard gives leadership clear visibility of consultant productivity, conversion rates, and revenue contribution — commercial intelligence that currently doesn\'t exist.' },
+              { num: '05', title: 'Snowflake ROI Clarity', icon: '💷', color: '#92400E',
+                detail: 'Snowflake is already paid for. Phase 1 delivers a clear ROI picture: what\'s working, what\'s wasted, and what would unlock the full investment. Cost accountability from day one.' },
+            ].map(({ num, title, icon, color, detail }) => (
+              <div key={num} style={{ background: WHITE, borderRadius: 12, padding: 18, boxShadow: '0 2px 8px rgba(0,0,0,0.06)', borderTop: `4px solid ${color}` }}>
+                <div style={{ fontSize: 10, fontWeight: 800, color, letterSpacing: '2px', marginBottom: 6 }}>{num}</div>
+                <div style={{ fontSize: 20, marginBottom: 8 }}>{icon}</div>
+                <div style={{ fontSize: 13, fontWeight: 800, color: TEAL, marginBottom: 8, lineHeight: 1.3 }}>{title}</div>
+                <div style={{ fontSize: 11.5, color: '#374151', lineHeight: 1.6 }}>{detail}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* ── WHAT RICHARD SAW TODAY ── */}
         <div style={{ marginBottom: 40 }}>
           <SectionTitle title="What we walked through today" sub="A summary of everything Richard Nunn reviewed — the foundation for this conversation" />
@@ -357,6 +383,18 @@ export default function CIO() {
               <div key={label} style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 12, padding: '16px 24px', textAlign: 'center' }}>
                 <div style={{ fontSize: 9, color: GOLD, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 6 }}>{label}</div>
                 <div style={{ fontSize: 13, color: WHITE, fontWeight: 600, lineHeight: 1.5, whiteSpace: 'pre-line' }}>{val}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
+            {[
+              { label: '🏛️ Group Impact', text: 'Kuoni becomes the DERTOUR Northern Europe data blueprint — not just a local deployment' },
+              { label: '🎯 Personalisation', text: 'Customer 360 live in 90 days — bespoke holiday expertise powered by data' },
+              { label: '📊 ROI Clarity', text: 'Snowflake investment justified with numbers, not promises, within the first month' },
+            ].map(({ label, text }) => (
+              <div key={label} style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(201,169,110,0.2)', borderRadius: 10, padding: '14px 16px' }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: GOLD, marginBottom: 6 }}>{label}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 1.5 }}>{text}</div>
               </div>
             ))}
           </div>
