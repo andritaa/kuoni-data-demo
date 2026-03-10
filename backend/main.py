@@ -312,6 +312,57 @@ def get_seasonal_trends():
     return rows if rows else []
 
 
+@app.get("/api/kpis")
+def get_kpis():
+    """Alias for /api/overview — used by CIO page"""
+    rows = sf.query("SELECT * FROM GOLD.RPT_OVERVIEW_KPI LIMIT 1")
+    if rows:
+        data = rows[0]
+        data["data_source"] = "snowflake"
+        return data
+    return _mock_overview()
+
+
+@app.get("/api/brands/rollup")
+def get_brand_rollup():
+    """DERTOUR Northern Europe — brand-level KPI rollup from DP_BRAND_ROLLUP"""
+    sql = """
+        SELECT
+            BRAND_ID, BRAND_NAME, BRAND_COUNTRY, MARKET, BRAND_TYPE, BRAND_CURRENCY,
+            REVENUE_SHARE_PCT,
+            TOTAL_BOOKINGS, TOTAL_CUSTOMERS,
+            TOTAL_REVENUE_GBP, AVG_BOOKING_VALUE_GBP,
+            TOTAL_MARGIN_GBP, AVG_MARGIN_PCT, ACTUAL_REVENUE_SHARE_PCT
+        FROM DATA_PRODUCTS.DP_BRAND_ROLLUP
+        ORDER BY TOTAL_REVENUE_GBP DESC
+    """
+    rows = sf.query(sql)
+    if rows:
+        return {"brands": rows, "data_source": "snowflake"}
+    # Mock fallback — proportional split of known total portfolio
+    brands = [
+        {"brand_id": "KUONI_UK",  "brand_name": "Kuoni UK",           "brand_country": "United Kingdom", "market": "UK",          "brand_type": "Luxury & Premium",     "brand_currency": "GBP", "revenue_share_pct": 42.0, "total_bookings": 3360, "total_customers": 840,  "total_revenue_gbp": 25282560, "avg_booking_value_gbp": 7525, "total_margin_gbp": 5059200, "avg_margin_pct": 20.0},
+        {"brand_id": "APOLLO",    "brand_name": "Apollo Travel",       "brand_country": "Sweden",         "market": "Nordics",     "brand_type": "Package & Sun/Beach",  "brand_currency": "SEK", "revenue_share_pct": 24.0, "total_bookings": 1920, "total_customers": 1560, "total_revenue_gbp": 14447160, "avg_booking_value_gbp": 7524, "total_margin_gbp": 2889600, "avg_margin_pct": 20.0},
+        {"brand_id": "KUONI_FR",  "brand_name": "Kuoni France",        "brand_country": "France",         "market": "France",      "brand_type": "Luxury & Premium",     "brand_currency": "EUR", "revenue_share_pct": 18.0, "total_bookings": 1440, "total_customers": 490,  "total_revenue_gbp": 10836120, "avg_booking_value_gbp": 7525, "total_margin_gbp": 2167200, "avg_margin_pct": 20.0},
+        {"brand_id": "PRIJSVRIJ", "brand_name": "Prijsvrij Vakanties", "brand_country": "Netherlands",    "market": "Netherlands", "brand_type": "Online Travel",        "brand_currency": "EUR", "revenue_share_pct": 10.0, "total_bookings": 800,  "total_customers": 650,  "total_revenue_gbp":  6020400, "avg_booking_value_gbp": 7525, "total_margin_gbp": 1204080, "avg_margin_pct": 20.0},
+        {"brand_id": "DREIZEN",   "brand_name": "D-reizen",            "brand_country": "Belgium",        "market": "Belgium",     "brand_type": "Online & Independent", "brand_currency": "EUR", "revenue_share_pct":  6.0, "total_bookings": 480,  "total_customers": 310,  "total_revenue_gbp":  3612240, "avg_booking_value_gbp": 7525, "total_margin_gbp":  722448, "avg_margin_pct": 20.0},
+    ]
+    return {"brands": brands, "data_source": "mock"}
+
+
+@app.get("/api/brands/destinations")
+def get_brand_destinations():
+    """DERTOUR Northern Europe — destination mix per brand"""
+    sql = """
+        SELECT BRAND_ID, BRAND_NAME, MARKET, DESTINATION_NAME, CONTINENT,
+               DESTINATION_TIER, BOOKINGS, REVENUE_GBP, AVG_BOOKING_VALUE_GBP, PCT_OF_BRAND_BOOKINGS
+        FROM DATA_PRODUCTS.DP_BRAND_DESTINATION_MIX
+        ORDER BY BRAND_ID, REVENUE_GBP DESC
+    """
+    rows = sf.query(sql)
+    return rows if rows else []
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

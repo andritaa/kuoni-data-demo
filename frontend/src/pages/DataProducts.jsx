@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 const TEAL = '#1B4F6B'
 const GOLD = '#C9A96E'
 const NAVY = '#1A2D55'
+const GREEN = '#14532D'
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:8010'
 
@@ -123,6 +124,217 @@ ORDER BY year, month_num`,
 ]
 
 const slaBadge = { PLATINUM: { bg:'#FEF3C7', text:'#92400E', label:'⭐ PLATINUM' }, GOLD: { bg:'#EBF4F8', text:TEAL, label:'🥇 GOLD' }, SILVER: { bg:'#F3F4F6', text:'#6B7280', label:'🥈 SILVER' } }
+
+// ── Brand colour map ──
+const BRAND_COLORS = {
+  KUONI_UK:  { primary: TEAL,      flag: '🇬🇧', bg: '#EBF4F8' },
+  KUONI_FR:  { primary: '#1A237E', flag: '🇫🇷', bg: '#E8EAF6' },
+  APOLLO:    { primary: '#0277BD', flag: '🇸🇪', bg: '#E1F5FE' },
+  PRIJSVRIJ: { primary: '#E65100', flag: '🇳🇱', bg: '#FFF3E0' },
+  DREIZEN:   { primary: '#880E4F', flag: '🇧🇪', bg: '#FCE4EC' },
+}
+
+function fmt(n) { return n ? `£${(n / 1_000_000).toFixed(1)}M` : '—' }
+function fmtK(n) { return n ? Number(n).toLocaleString() : '—' }
+function fmtAvg(n) { return n ? `£${Math.round(n).toLocaleString()}` : '—' }
+
+function BrandMeshSection() {
+  const [brands, setBrands] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [selectedBrand, setSelectedBrand] = useState(null)
+  const [view, setView] = useState('grid') // grid | mesh
+
+  useEffect(() => {
+    fetch(`${API}/api/brands/rollup`)
+      .then(r => r.json())
+      .then(d => {
+        setBrands(d.brands || d)
+        setSelectedBrand((d.brands || d)[0]?.brand_id || null)
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }, [])
+
+  const groupRevenue = brands ? brands.reduce((s, b) => s + (b.total_revenue_gbp || 0), 0) : 0
+
+  return (
+    <div style={{ marginTop: 48 }}>
+      {/* Section header */}
+      <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0D2B38 100%)`, borderRadius: 16, padding: '28px 32px', marginBottom: 24, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: -60, right: -60, width: 240, height: 240, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%)' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 8 }}>DERTOUR GROUP · DATA MESH</div>
+            <h2 style={{ fontSize: 24, fontWeight: 800, color: 'white', margin: '0 0 8px', fontFamily: 'Georgia, serif' }}>Northern Europe — Brand Data Domains</h2>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', maxWidth: 620, lineHeight: 1.6, margin: 0 }}>
+              In a data mesh architecture, each brand owns its data domain. Kuoni UK, Kuoni France, Apollo, Prijsvrij Vakanties and D-reizen each publish governed data products consumed by the brand, by DERTOUR Northern Europe leadership, and by DERTOUR Group's central reporting layer.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 12 }}>
+            {[
+              ['5', 'Brand Domains'],
+              ['3', 'Data Products'],
+              ['1', 'Group Rollup'],
+            ].map(([n, l]) => (
+              <div key={l} style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 10, padding: '12px 16px', textAlign: 'center' }}>
+                <div style={{ fontSize: 22, fontWeight: 800, color: GOLD }}>{n}</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.55)', marginTop: 2 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Data mesh flow diagram */}
+      <div style={{ background: 'white', borderRadius: 12, padding: '16px 20px', marginBottom: 20, border: '1px solid #E5E7EB' }}>
+        <div style={{ fontSize: 10, fontWeight: 700, color: '#6B7280', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 12 }}>Data Mesh Flow — DERTOUR Northern Europe</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          {/* Source brand domains */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            {['🇬🇧 Kuoni UK', '🇫🇷 Kuoni France', '🇸🇪 Apollo', '🇳🇱 Prijsvrij', '🇧🇪 D-reizen'].map(b => (
+              <div key={b} style={{ background: '#F3F4F6', borderRadius: 6, padding: '4px 10px', fontSize: 11, fontWeight: 600, color: TEAL }}>{b}</div>
+            ))}
+          </div>
+          <div style={{ fontSize: 18, color: '#D1D5DB', padding: '0 4px' }}>→</div>
+          {/* Brand data products */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            {['DP_BRAND_PERFORMANCE', 'DP_BRAND_ROLLUP', 'DP_BRAND_DESTINATION_MIX'].map(p => (
+              <div key={p} style={{ background: TEAL + '15', border: `1px solid ${TEAL}30`, borderRadius: 6, padding: '4px 10px', fontSize: 10, fontWeight: 700, color: TEAL, fontFamily: 'monospace' }}>{p}</div>
+            ))}
+          </div>
+          <div style={{ fontSize: 18, color: '#D1D5DB', padding: '0 4px' }}>→</div>
+          {/* Consumers */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            {['Northern Europe Leadership', 'DERTOUR Group Board', 'Boris Raoul · Group CTO'].map(c => (
+              <div key={c} style={{ background: GOLD + '20', border: `1px solid ${GOLD}40`, borderRadius: 6, padding: '4px 10px', fontSize: 11, fontWeight: 600, color: '#92400E' }}>{c}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Brand cards — live from Snowflake */}
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: 40, color: '#6B7280' }}>Loading from Snowflake…</div>
+      ) : brands ? (
+        <>
+          {/* Group totals bar */}
+          <div style={{ background: NAVY, borderRadius: 12, padding: '14px 20px', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: GOLD, letterSpacing: '1.5px', textTransform: 'uppercase' }}>Group Total (Northern Europe)</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: 'white' }}>{fmt(groupRevenue)}</div>
+            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)' }}>across {brands.length} brands · {fmtK(brands.reduce((s, b) => s + (b.total_bookings || 0), 0))} bookings · {fmtK(brands.reduce((s, b) => s + (b.total_customers || 0), 0))} customers</div>
+            <div style={{ marginLeft: 'auto', background: GOLD + '25', border: `1px solid ${GOLD}50`, borderRadius: 20, padding: '4px 12px', fontSize: 10, fontWeight: 800, color: GOLD }}>❄️ LIVE SNOWFLAKE</div>
+          </div>
+
+          {/* Revenue share bar */}
+          <div style={{ background: 'white', borderRadius: 12, padding: '14px 20px', marginBottom: 20, border: '1px solid #E5E7EB' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: '#6B7280', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 10 }}>Revenue Distribution Across Brands</div>
+            <div style={{ display: 'flex', height: 28, borderRadius: 6, overflow: 'hidden', gap: 2 }}>
+              {brands.map(b => {
+                const bc = BRAND_COLORS[b.brand_id] || { primary: TEAL }
+                const sharePct = groupRevenue > 0 ? (b.total_revenue_gbp / groupRevenue * 100) : b.revenue_share_pct
+                return (
+                  <div key={b.brand_id} title={`${b.brand_name}: ${sharePct.toFixed(1)}%`}
+                    style={{ flex: sharePct, background: bc.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: 'white', minWidth: 30, cursor: 'pointer' }}
+                    onClick={() => setSelectedBrand(b.brand_id)}>
+                    {sharePct > 8 ? `${sharePct.toFixed(0)}%` : ''}
+                  </div>
+                )
+              })}
+            </div>
+            <div style={{ display: 'flex', gap: 16, marginTop: 8, flexWrap: 'wrap' }}>
+              {brands.map(b => {
+                const bc = BRAND_COLORS[b.brand_id] || { primary: TEAL }
+                return (
+                  <div key={b.brand_id} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: 2, background: bc.primary, flexShrink: 0 }} />
+                    <span style={{ color: '#374151' }}>{bc.flag} {b.brand_name}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Brand detail cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 16, marginBottom: 24 }}>
+            {brands.map(b => {
+              const bc = BRAND_COLORS[b.brand_id] || { primary: TEAL, flag: '🌍', bg: '#F3F4F6' }
+              const isSelected = selectedBrand === b.brand_id
+              return (
+                <div key={b.brand_id}
+                  onClick={() => setSelectedBrand(b.brand_id)}
+                  style={{ background: 'white', borderRadius: 12, border: `2px solid ${isSelected ? bc.primary : '#E5E7EB'}`, padding: 20, cursor: 'pointer', transition: 'all 0.15s', boxShadow: isSelected ? `0 6px 20px ${bc.primary}22` : '0 2px 8px rgba(0,0,0,0.05)', transform: isSelected ? 'translateY(-2px)' : 'none' }}>
+                  {/* Header */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+                    <div style={{ fontSize: 26 }}>{bc.flag}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 15, fontWeight: 800, color: bc.primary }}>{b.brand_name}</div>
+                      <div style={{ fontSize: 11, color: '#6B7280' }}>{b.brand_type} · {b.market}</div>
+                    </div>
+                    <div style={{ background: bc.bg, border: `1px solid ${bc.primary}30`, borderRadius: 20, padding: '3px 10px', fontSize: 10, fontWeight: 700, color: bc.primary, textTransform: 'uppercase' }}>
+                      {b.brand_currency}
+                    </div>
+                  </div>
+                  {/* KPIs */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, marginBottom: 14 }}>
+                    {[
+                      ['💷 Revenue (GBP)', fmt(b.total_revenue_gbp)],
+                      ['✈️ Bookings', fmtK(b.total_bookings)],
+                      ['👥 Customers', fmtK(b.total_customers)],
+                      ['📊 Avg Booking', fmtAvg(b.avg_booking_value_gbp)],
+                    ].map(([label, val]) => (
+                      <div key={label} style={{ background: '#F8F9FA', borderRadius: 8, padding: '8px 10px' }}>
+                        <div style={{ fontSize: 10, color: '#9CA3AF', marginBottom: 2 }}>{label}</div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: TEAL }}>{val}</div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Group share bar */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#9CA3AF', marginBottom: 4 }}>
+                      <span>Group Revenue Share</span>
+                      <span style={{ fontWeight: 700, color: bc.primary }}>
+                        {groupRevenue > 0 ? (b.total_revenue_gbp / groupRevenue * 100).toFixed(1) : b.revenue_share_pct}%
+                      </span>
+                    </div>
+                    <div style={{ height: 5, background: '#E5E7EB', borderRadius: 3 }}>
+                      <div style={{ height: '100%', width: `${groupRevenue > 0 ? (b.total_revenue_gbp / groupRevenue * 100) : b.revenue_share_pct}%`, background: bc.primary, borderRadius: 3 }} />
+                    </div>
+                  </div>
+                  {/* Data product tags */}
+                  <div style={{ display: 'flex', gap: 5, marginTop: 12, flexWrap: 'wrap' }}>
+                    {['DP_BRAND_PERFORMANCE', 'DP_BRAND_ROLLUP', 'DP_BRAND_DESTINATION_MIX'].map(p => (
+                      <span key={p} style={{ background: bc.bg, border: `1px solid ${bc.primary}25`, borderRadius: 12, padding: '2px 8px', fontSize: 9, fontWeight: 700, color: bc.primary, fontFamily: 'monospace' }}>{p}</span>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Data mesh rationale */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 20 }}>
+            {[
+              { icon: '🏛️', title: 'Why Data Mesh?', color: TEAL,
+                text: 'Each brand has distinct market context, currency, booking patterns, and customer behaviour. A centralised model forces compromise. Mesh gives each brand domain autonomy while enabling group-level consolidation.' },
+              { icon: '📊', title: 'Group Reporting', color: NAVY,
+                text: 'DP_BRAND_ROLLUP produces a single GBP-equivalent view across all 5 brands — what Leif Vase Larsen (CEO Northern Europe) and Boris Raoul (Group CTO) need for portfolio decisions.' },
+              { icon: '🎯', title: 'Personalisation Signal', color: '#14532D',
+                text: 'DP_BRAND_DESTINATION_MIX reveals cross-brand destination intelligence — Apollo customers who love Maldives are Kuoni premium prospects. The mesh makes this signal visible.' },
+            ].map(({ icon, title, color, text }) => (
+              <div key={title} style={{ background: 'white', borderRadius: 12, padding: 20, borderTop: `4px solid ${color}`, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                <div style={{ fontSize: 22, marginBottom: 8 }}>{icon}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color, marginBottom: 8 }}>{title}</div>
+                <div style={{ fontSize: 12, color: '#374151', lineHeight: 1.6 }}>{text}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div style={{ textAlign: 'center', padding: 40, color: '#6B7280' }}>Brand data unavailable</div>
+      )}
+    </div>
+  )
+}
 
 function ProductCard({ p, selected, onClick }) {
   const sla = slaBadge[p.sla]
@@ -358,6 +570,9 @@ export default function DataProducts() {
           </div>
         </div>
       </div>
+
+      {/* ── DERTOUR GROUP BRAND MESH ── */}
+      <BrandMeshSection />
     </main>
   )
 }

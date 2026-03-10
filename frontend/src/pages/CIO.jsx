@@ -41,17 +41,18 @@ function Badge({ children, color = TEAL }) {
 function LiveStats() {
   const [kpis, setKpis] = useState(null)
   useEffect(() => {
-    fetch(`${API}/api/kpis`).then(r => r.json()).then(setKpis).catch(() => {})
+    fetch(`${API}/api/overview`).then(r => r.json()).then(setKpis).catch(() => {})
   }, [])
-  const fmt = (n) => n ? `£${(n / 1_000_000).toFixed(1)}M` : '£60.2M'
-  const fmtN = (n) => n ? n.toLocaleString() : '8,000'
+  const fmt = (n) => (n && !isNaN(n)) ? `£${(n / 1_000_000).toFixed(1)}M` : '£60.2M'
+  const fmtN = (n) => (n && !isNaN(n)) ? Number(n).toLocaleString() : '8,000'
+  const fmtAvg = (n) => (n && !isNaN(n)) ? `£${Math.round(n).toLocaleString()}` : '£8,325'
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 8 }}>
       {[
-        { icon: '💷', value: kpis ? fmt(kpis.total_revenue) : '£60.2M', label: 'Total Revenue', accent: TEAL },
+        { icon: '💷', value: kpis ? fmt(kpis.total_revenue_gbp) : '£60.2M', label: 'Total Revenue', accent: TEAL },
         { icon: '✈️', value: kpis ? fmtN(kpis.total_bookings) : '8,000', label: 'Bookings', accent: '#0F766E' },
-        { icon: '👥', value: kpis ? fmtN(kpis.total_customers) : '2,000', label: 'Customers', accent: '#92400E' },
-        { icon: '📊', value: kpis ? `£${Math.round(kpis.avg_booking_value).toLocaleString()}` : '£8,325', label: 'Avg Booking Value', accent: GOLD },
+        { icon: '👥', value: kpis ? fmtN(kpis.active_customers) : '2,000', label: 'Customers', accent: '#92400E' },
+        { icon: '📊', value: kpis ? fmtAvg(kpis.avg_booking_value_gbp) : '£8,325', label: 'Avg Booking Value', accent: GOLD },
       ].map(({ icon, value, label, accent }) => (
         <div key={label} style={{ background: WHITE, borderRadius: 12, padding: '20px', textAlign: 'center', boxShadow: '0 2px 12px rgba(0,0,0,0.07)', borderTop: `4px solid ${accent}` }}>
           <div style={{ fontSize: 24, marginBottom: 6 }}>{icon}</div>
