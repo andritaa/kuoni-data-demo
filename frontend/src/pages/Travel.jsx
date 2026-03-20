@@ -42,7 +42,7 @@ export default function Travel() {
             <p style={{ color: GOLD }} className="text-sm font-medium">Monday 23 March 2026 · 9:00 AM</p>
           </div>
         </div>
-        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-6 grid grid-cols-1 gap-6">
           <div>
             <div className="mb-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">📍 Address</p>

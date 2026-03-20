@@ -49,14 +49,14 @@ export default function Dashboard() {
         <span className="text-xs text-gray-400 ml-auto">❄️ Snowflake · AWS eu-west-2 · 30,270 rows</span>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <KPICard label="Total Revenue" icon="💷" value={loading?'…':fmt(kpi?.total_revenue_gbp)} sub="3-year portfolio" />
         <KPICard label="Total Bookings" icon="✈️" value={loading?'…':(kpi?.total_bookings||0).toLocaleString()} sub="Confirmed + Completed" />
         <KPICard label="Avg Booking Value" icon="📈" value={loading?'…':fmt(kpi?.avg_booking_value_gbp)} sub="Per transaction" />
         <KPICard label="Active Customers" icon="👥" value={loading?'…':(kpi?.total_customers||0).toLocaleString()} sub={`${(kpi?.cancellation_rate_pct||0).toFixed(1)}% cancellation rate`} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{color:TEAL}}>Monthly Revenue Trend</h3>
           <ResponsiveContainer width="100%" height={220}>
@@ -83,7 +83,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{color:TEAL}}>Customer Segments</h3>
           <div className="flex items-center gap-4">

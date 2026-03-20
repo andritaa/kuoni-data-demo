@@ -134,7 +134,7 @@ export default function Chat() {
 
       {/* Suggestions */}
       {messages.length <= 2 && (
-        <div className="mb-3 flex flex-wrap gap-2">
+        <div className="mb-3 flex flex-wrap gap-2 px-1">
           {SUGGESTIONS.slice(0, 4).map((s, i) => (
             <button key={i} onClick={() => ask(s)}
               className="px-3 py-1.5 rounded-full text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors border border-blue-200">

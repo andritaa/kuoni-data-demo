@@ -58,7 +58,7 @@ export default function Tasks() {
 
       {showAdd && (
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-6">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input placeholder="Title" value={newTask.title} onChange={e => setNewTask(p => ({ ...p, title: e.target.value }))}
               className="border rounded-lg px-3 py-2 text-sm" />
             <input placeholder="Due date (YYYY-MM-DD)" value={newTask.due} onChange={e => setNewTask(p => ({ ...p, due: e.target.value }))}
@@ -80,7 +80,7 @@ export default function Tasks() {
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {COLUMNS.map(col => (
           <div key={col} className="rounded-xl bg-gray-50 border border-gray-200 min-h-[400px]"
                onDrop={e => handleDrop(e, col)} onDragOver={handleDragOver}>

@@ -27,7 +27,7 @@ export default function PoCs() {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
         {['Draft', 'In Progress', 'Complete'].map(status => {
           const count = pocs.filter(p => p.status === status).length
           const sc = STATUS_COLORS[status]
@@ -44,7 +44,7 @@ export default function PoCs() {
 
       {/* PoC Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto"><table className="w-full min-w-[700px]">
           <thead>
             <tr style={{ background: BLUE }}>
               {['PoC Name', 'Status', 'Owner', 'Start', 'Target', ''].map(h => (
@@ -94,6 +94,7 @@ export default function PoCs() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )
