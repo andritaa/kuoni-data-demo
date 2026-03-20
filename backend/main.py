@@ -439,3 +439,16 @@ def get_data_quality():
         ]
 
     return {"checks": checks, "overall_score": round(sum(c["score"] for c in checks) / len(checks), 1)}
+
+
+# ─── CHATBOT ──────────────────────────────────────────────────────────────────
+
+class ChatRequest(BaseModel):
+    question: str
+
+@app.post("/api/chat")
+async def chat(req: ChatRequest):
+    """Natural language query against Snowflake data."""
+    from chatbot import ask
+    result = ask(req.question)
+    return result

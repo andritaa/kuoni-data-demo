@@ -5,6 +5,7 @@ import DataProducts from './pages/DataProducts'
 import PoCs from './pages/PoCs'
 import Tasks from './pages/Tasks'
 import Travel from './pages/Travel'
+import Chat from './pages/Chat'
 
 const BLUE = '#003366'
 const GOLD = '#C9A96E'
@@ -15,6 +16,7 @@ const NAV = [
   { id: 'tasks', label: '📋 Tasks', sub: 'Kanban Board' },
   { id: 'architecture', label: '🏗️ Architecture', sub: 'Platform Strategy' },
   { id: 'products', label: '📦 Data Products', sub: 'Data Mesh Catalogue' },
+  { id: 'chat', label: '🤖 Ask Andrita', sub: 'AI Data Chatbot' },
   { id: 'travel', label: '✈️ Travel', sub: 'Meetings & Logistics' },
 ]
 
@@ -79,6 +81,7 @@ export default function App() {
         {page === 'products' && <DataProducts />}
         {page === 'pocs' && <PoCs />}
         {page === 'tasks' && <Tasks />}
+        {page === 'chat' && <Chat />}
         {page === 'travel' && <Travel />}
       </main>
     </div>
