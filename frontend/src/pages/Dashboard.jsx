@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:8010'
-const TEAL = '#1B4F6B'
+const TEAL = '#003366'
 const GOLD = '#C9A96E'
 const COLORS = [TEAL, GOLD, '#2E6F8F', '#8B4513', '#4A7C9B', '#D4A84B', '#1A3A4A', '#E8C47A']
 const fmt = (n) => n >= 1_000_000 ? `£${(n/1_000_000).toFixed(1)}M` : `£${Number(n||0).toLocaleString('en-GB',{maximumFractionDigits:0})}`

@@ -3,7 +3,7 @@ import os, tempfile, shutil
 
 os.environ.setdefault('SNOWFLAKE_ACCOUNT', 'SNOWFLAKE_ACCOUNT_ENV')
 os.environ.setdefault('SNOWFLAKE_USER', 'SNOWFLAKE_USER_ENV')
-os.environ.setdefault('SNOWFLAKE_PASSWORD', 'REDACTED_ROTATE_NOW')
+os.environ.setdefault('SNOWFLAKE_PASSWORD', os.environ.get('SNOWFLAKE_PASSWORD', ''))
 os.environ.setdefault('SNOWFLAKE_DATABASE', 'KUONI_DEMO')
 os.environ.setdefault('SNOWFLAKE_WAREHOUSE', 'KUONI_WH')
 

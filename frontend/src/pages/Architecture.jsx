@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const TEAL = '#1B4F6B'
+const TEAL = '#003366'
 const GOLD = '#C9A96E'
 const RED = '#C0392B'
 const GREEN = '#27AE60'
@@ -41,7 +41,7 @@ const assessmentItems = [
 ]
 
 const integrations = [
-  { name: 'Booking Engine', type: 'Source', tool: 'Snowpipe / Kafka', icon: '✈️', desc: 'Amadeus / Travelport → real-time booking events via Snowpipe Streaming', color: '#1B4F6B' },
+  { name: 'Booking Engine', type: 'Source', tool: 'Snowpipe / Kafka', icon: '✈️', desc: 'Amadeus / Travelport → real-time booking events via Snowpipe Streaming', color: '#003366' },
   { name: 'Salesforce CRM', type: 'Source', tool: 'Fivetran', icon: '👥', desc: 'Customer 360 — contacts, leads, opportunities, cases synced hourly', color: '#00A1E0' },
   { name: 'Finance / ERP', type: 'Source', tool: 'Fivetran / JDBC', icon: '💷', desc: 'Revenue recognition, margin data, supplier payments', color: '#2E6F8F' },
   { name: 'Web Analytics', type: 'Source', tool: 'Snowpipe', icon: '🌐', desc: 'Adobe Analytics / GA4 → clickstream, session, conversion data', color: '#4A7C9B' },
@@ -98,7 +98,7 @@ export default function Architecture() {
           <div className="text-3xl">💡</div>
           <div>
             <p className="text-sm font-semibold mb-1" style={{color:TEAL}}>Situation: Tactical Snowflake, Strategic Opportunity</p>
-            <p className="text-sm text-gray-600">Snowflake was introduced to solve an immediate reporting challenge. It's functioning — but it's been architected tactically, not strategically. The opportunity is to take what's working and build a data platform that can power Kuoni's commercial and operational decision-making for the next 5+ years.</p>
+            <p className="text-sm text-gray-600">Snowflake was introduced to solve an immediate reporting challenge. It's functioning — but it's been architected tactically, not strategically. The opportunity is to take what's working and build a data platform that can power DERTOUR's commercial and operational decision-making for the next 5+ years.</p>
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -183,7 +183,7 @@ export default function Architecture() {
               points:['Hubs — business keys','Links — relationships','Satellites — context + history','Source-system agnostic'] },
             { label:'🥇 GOLD', sub:'Star Schema', color:'#C9A96E', bg:'#FEF9EF', border:'#E8D5A0',
               points:['FCT_BOOKING (8K rows)','6 conformed dimensions','Optimised for BI queries','Surrogate keys + SCD2'] },
-            { label:'📦 PRODUCTS', sub:'Data Mesh', color:'#1B4F6B', bg:'#EBF4F8', border:'#B8D4E0',
+            { label:'📦 PRODUCTS', sub:'Data Mesh', color:'#003366', bg:'#EBF4F8', border:'#B8D4E0',
               points:['Governed SECURE VIEWs','SLA-backed contracts','Domain team ownership','Object tagged (Horizon)'] },
             { label:'📊 CONSUME', sub:'BI & Analytics', color:'#27AE60', bg:'#EDFAF2', border:'#A8DFBE',
               points:['Power BI DirectQuery','Snowsight dashboards','Snowpark ML models','API consumers'] },
@@ -226,7 +226,7 @@ export default function Architecture() {
               solution:'Flatten DV2.0 into a wide fact table + conformed dimensions. Power BI and Snowsight get sub-second aggregations. Surrogate keys and SCD2 on DIM_CUSTOMER and DIM_AGENT track history.',
               tables:['FCT_BOOKING (8K)','DIM_DATE (4,018)','DIM_CUSTOMER (2K)','DIM_DESTINATION (50)','DIM_AGENT (20)','DIM_CHANNEL (4)'],
             },
-            { title:'Data Products — DATA_PRODUCTS', color:'#1B4F6B', bg:'#EBF4F8', icon:'📦',
+            { title:'Data Products — DATA_PRODUCTS', color:'#003366', bg:'#EBF4F8', icon:'📦',
               problem:'Star Schema tables are shared but not governed — anyone can query anything',
               solution:'Domain teams publish SECURE VIEWs as contracts. PII is masked, SLAs are defined, ownership is tagged. Consumers get a stable API — they never touch the underlying fact or dim tables directly.',
               tables:['DP_CUSTOMER_360','DP_BOOKING_INTELLIGENCE','DP_DESTINATION_PERFORMANCE','DP_AGENT_SCORECARD','DP_EXECUTIVE_KPIS'],
@@ -246,7 +246,7 @@ export default function Architecture() {
                 <p className="text-xs text-gray-700">{layer.solution}</p>
               </div>
               <div className="pt-3 border-t" style={{borderColor:layer.color+'20'}}>
-                <p className="text-xs text-gray-400 mb-1 font-semibold">Kuoni tables</p>
+                <p className="text-xs text-gray-400 mb-1 font-semibold">DERTOUR tables</p>
                 <div className="flex flex-wrap gap-1">
                   {layer.tables.map(t => (
                     <span key={t} className="text-xs font-mono px-1.5 py-0.5 rounded" style={{background:layer.color+'15',color:layer.color}}>{t}</span>
@@ -258,10 +258,10 @@ export default function Architecture() {
         </div>
 
         {/* The interview quote */}
-        <div className="rounded-xl p-5" style={{background:`linear-gradient(135deg, #1A2D55 0%, #1B4F6B 100%)`}}>
+        <div className="rounded-xl p-5" style={{background:`linear-gradient(135deg, #1A2D55 0%, #003366 100%)`}}>
           <p className="text-xs text-white/50 font-semibold uppercase tracking-wider mb-2">The architectural rationale</p>
           <p className="text-white text-sm leading-relaxed">
-            <span style={{color:GOLD}}>"</span>Data Vault gives us <strong className="text-white">resilience</strong> — if Kuoni migrates from one booking system to another, only the Silver layer needs updating. The Star Schema gives analysts and Power BI <strong className="text-white">performance</strong> — sub-second aggregations on 8,000+ bookings. And Data Products give domain teams <strong className="text-white">ownership</strong> — the CRM team publishes Customer 360 with a GOLD SLA and PII masking, and no downstream consumer ever touches the raw tables. These aren't alternatives. They're a pipeline — and this is what a mature Snowflake platform looks like.<span style={{color:GOLD}}>"</span>
+            <span style={{color:GOLD}}>"</span>Data Vault gives us <strong className="text-white">resilience</strong> — if DERTOUR migrates from one booking system to another, only the Silver layer needs updating. The Star Schema gives analysts and Power BI <strong className="text-white">performance</strong> — sub-second aggregations on 8,000+ bookings. And Data Products give domain teams <strong className="text-white">ownership</strong> — the CRM team publishes Customer 360 with a GOLD SLA and PII masking, and no downstream consumer ever touches the raw tables. These aren't alternatives. They're a pipeline — and this is what a mature Snowflake platform looks like.<span style={{color:GOLD}}>"</span>
           </p>
         </div>
       </Section>

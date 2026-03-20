@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const TEAL = '#1B4F6B'
+const TEAL = '#003366'
 const GOLD = '#C9A96E'
 const NAVY = '#1A2D55'
 const GREEN = '#14532D'
@@ -18,7 +18,7 @@ const products = [
     owner: 'CRM Team',
     sla: 'GOLD',
     refresh: 'Daily',
-    desc: 'Unified customer profile — single source of truth for every Kuoni customer. Combines CRM data, booking history, lifetime value, and segment classification.',
+    desc: 'Unified customer profile — single source of truth for every DERTOUR customer. Combines CRM data, booking history, lifetime value, and segment classification.',
     columns: ['customer_id','segment','loyalty_tier','country','total_bookings','lifetime_value_gbp','avg_booking_value_gbp','last_booking_date','days_since_last_booking','favourite_destination','preferred_channel','retention_status','ltv_band'],
     usedBy: ['CRM dashboards','Personalisation engine','Loyalty programme','Retention campaigns'],
     sources: ['BRONZE.RAW_CUSTOMERS','GOLD.FCT_BOOKING','GOLD.DIM_DESTINATION'],
@@ -127,8 +127,8 @@ const slaBadge = { PLATINUM: { bg:'#FEF3C7', text:'#92400E', label:'⭐ PLATINUM
 
 // ── Brand colour map ──
 const BRAND_COLORS = {
-  KUONI_UK:  { primary: TEAL,      flag: '🇬🇧', bg: '#EBF4F8' },
-  KUONI_FR:  { primary: '#1A237E', flag: '🇫🇷', bg: '#E8EAF6' },
+  DERTOUR_UK:  { primary: TEAL,      flag: '🇬🇧', bg: '#EBF4F8' },
+  DERTOUR_FR:  { primary: '#1A237E', flag: '🇫🇷', bg: '#E8EAF6' },
   APOLLO:    { primary: '#0277BD', flag: '🇸🇪', bg: '#E1F5FE' },
   PRIJSVRIJ: { primary: '#E65100', flag: '🇳🇱', bg: '#FFF3E0' },
   DREIZEN:   { primary: '#880E4F', flag: '🇧🇪', bg: '#FCE4EC' },
@@ -167,7 +167,7 @@ function BrandMeshSection() {
             <div style={{ fontSize: 10, fontWeight: 700, color: GOLD, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 8 }}>DERTOUR GROUP · DATA MESH</div>
             <h2 style={{ fontSize: 24, fontWeight: 800, color: 'white', margin: '0 0 8px', fontFamily: 'Georgia, serif' }}>Northern Europe — Brand Data Domains</h2>
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', maxWidth: 620, lineHeight: 1.6, margin: 0 }}>
-              In a data mesh architecture, each brand owns its data domain. Kuoni UK, Kuoni France, Apollo, Prijsvrij Vakanties and D-reizen each publish governed data products consumed by the brand, by DERTOUR Northern Europe leadership, and by DERTOUR Group's central reporting layer.
+              In a data mesh architecture, each brand owns its data domain. DERTOUR UK, DERTOUR France, Apollo, Prijsvrij Vakanties and D-reizen each publish governed data products consumed by the brand, by DERTOUR Northern Europe leadership, and by DERTOUR Group's central reporting layer.
             </p>
           </div>
           <div style={{ display: 'flex', gap: 12 }}>
@@ -191,7 +191,7 @@ function BrandMeshSection() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
           {/* Source brand domains */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {['🇬🇧 Kuoni UK', '🇫🇷 Kuoni France', '🇸🇪 Apollo', '🇳🇱 Prijsvrij', '🇧🇪 D-reizen'].map(b => (
+            {['🇬🇧 DERTOUR UK', '🇫🇷 DERTOUR France', '🇸🇪 Apollo', '🇳🇱 Prijsvrij', '🇧🇪 D-reizen'].map(b => (
               <div key={b} style={{ background: '#F3F4F6', borderRadius: 6, padding: '4px 10px', fontSize: 11, fontWeight: 600, color: TEAL }}>{b}</div>
             ))}
           </div>
@@ -319,7 +319,7 @@ function BrandMeshSection() {
               { icon: '📊', title: 'Group Reporting', color: NAVY,
                 text: 'DP_BRAND_ROLLUP produces a single GBP-equivalent view across all 5 brands — what Leif Vase Larsen (CEO Northern Europe) and Boris Raoul (Group CTO) need for portfolio decisions.' },
               { icon: '🎯', title: 'Personalisation Signal', color: '#14532D',
-                text: 'DP_BRAND_DESTINATION_MIX reveals cross-brand destination intelligence — Apollo customers who love Maldives are Kuoni premium prospects. The mesh makes this signal visible.' },
+                text: 'DP_BRAND_DESTINATION_MIX reveals cross-brand destination intelligence — Apollo customers who love Maldives are DERTOUR premium prospects. The mesh makes this signal visible.' },
             ].map(({ icon, title, color, text }) => (
               <div key={title} style={{ background: 'white', borderRadius: 12, padding: 20, borderTop: `4px solid ${color}`, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
                 <div style={{ fontSize: 22, marginBottom: 8 }}>{icon}</div>
@@ -403,7 +403,7 @@ export default function DataProducts() {
           ['→','','#D1D5DB'],
           ['🥇 GOLD','Star Schema','#C9A96E'],
           ['→','','#D1D5DB'],
-          ['📦 DATA PRODUCTS','Domain APIs','#1B4F6B'],
+          ['📦 DATA PRODUCTS','Domain APIs','#003366'],
           ['→','','#D1D5DB'],
           ['📊 CONSUMERS','Power BI · Apps · AI','#27AE60'],
         ].map(([label, sub, color], i) => label === '→'
@@ -467,7 +467,7 @@ export default function DataProducts() {
                         ['TAG: SLA_TIER', p.sla],
                         ['TAG: REFRESH_CADENCE', p.refresh],
                         ['TAG: DATA_PRODUCT', 'TRUE'],
-                        ['Schema', 'KUONI_DEMO.DATA_PRODUCTS'],
+                        ['Schema', 'DERTOUR_DEMO.DATA_PRODUCTS'],
                         ['Type', 'SECURE VIEW'],
                         ['PII Masked', 'Yes — Dynamic Data Masking'],
                       ].map(([k, v]) => (
@@ -548,7 +548,7 @@ export default function DataProducts() {
 
               {tab === 'query' && (
                 <div>
-                  <p className="text-xs text-gray-400 mb-3">Run this in Snowsight — <span className="font-mono">USE DATABASE KUONI_DEMO;</span></p>
+                  <p className="text-xs text-gray-400 mb-3">Run this in Snowsight — <span className="font-mono">USE DATABASE DERTOUR_DEMO;</span></p>
                   <pre className="rounded-xl p-4 text-xs text-green-300 overflow-auto" style={{ background: '#0D1117', maxHeight: 300, fontFamily: 'monospace' }}>
                     <code>{p.query}</code>
                   </pre>
