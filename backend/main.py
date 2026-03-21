@@ -441,14 +441,33 @@ def get_data_quality():
     return {"checks": checks, "overall_score": round(sum(c["score"] for c in checks) / len(checks), 1)}
 
 
-# ─── CHATBOT ──────────────────────────────────────────────────────────────────
+# ─── AI ASSISTANT (RAG + SQL + Multimodal) ────────────────────────────────────
+
+from typing import Optional, List
 
 class ChatRequest(BaseModel):
     question: str
+    session_id: Optional[str] = None
+    image: Optional[str] = None  # base64 encoded image
 
 @app.post("/api/chat")
 async def chat(req: ChatRequest):
-    """Natural language query against Snowflake data."""
+    """AI assistant: RAG knowledge + live SQL + image analysis."""
     from chatbot import ask
-    result = ask(req.question)
+    result = ask(req.question, session_id=req.session_id, image=req.image)
     return result
+
+
+class AddDocRequest(BaseModel):
+    title: str
+    content: str
+    doc_type: str = "text"
+    source: str = ""
+    tags: list = []
+
+@app.post("/api/knowledge/add")
+async def add_knowledge(req: AddDocRequest):
+    """Add a document to the vectorised knowledge base."""
+    from chatbot import add_document
+    ok = add_document(req.title, req.content, req.doc_type, req.source, req.tags)
+    return {"ok": ok}

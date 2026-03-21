@@ -1,80 +1,43 @@
 """
-DERTOUR Data Chatbot — Natural language → SQL → Answer
-Uses OpenAI to generate Snowflake SQL from plain English questions.
+DERTOUR Data Assistant — RAG + SQL + Multimodal
+================================================
+1. RAG: Searches vectorised knowledge base in Snowflake for context
+2. SQL: Generates and runs queries against live Snowflake data
+3. Multimodal: Accepts images (base64) for analysis via GPT-5.4 vision
+4. Memory: Stores conversation history for context continuity
 """
 
-import os
-import json
-import logging
+import os, json, logging, uuid, base64
 import requests
 import snowflake.connector
 
 logger = logging.getLogger(__name__)
 
+OPENAI_KEY = os.environ.get('OPENAI_API_KEY', '')
+MODEL = 'gpt-5.4-mini'
+MODEL_VISION = 'gpt-5.4'
+
 SCHEMA_CONTEXT = """
-You are a data analyst for DERTOUR Group, an international travel company.
-You have access to a Snowflake data warehouse with the following schema:
+DATABASE: KUONI_DEMO (Snowflake)
 
-DATABASE: KUONI_DEMO
+GOLD LAYER (star schema):
+- FCT_BOOKING (26,900 rows) — BOOKING_SK, BOOKING_DATE_SK, TRAVEL_DATE_SK, CUSTOMER_SK, PRODUCT_SK, DESTINATION_SK, AGENT_SK, CHANNEL_SK, BRAND_SK, BOOKING_REF, BOOKING_STATUS, TOTAL_VALUE_GBP, MARGIN_PCT, MARGIN_GBP, NUM_PASSENGERS, DURATION_DAYS
+- DIM_BRAND (10) — BRAND_SK, BRAND_NAME (Kuoni/Apollo/DERTOUR/ITS/Prijsvrij Vakanties/Exim Tours/Fischer/Helvetic Tours/Meiers Weltreisen/D-reizen), REGION, MARKET, BRAND_TYPE
+- DIM_CUSTOMER (2,000) — CUSTOMER_SK, FIRST_NAME, LAST_NAME, SEGMENT, LOYALTY_TIER, CITY, COUNTRY
+- DIM_PRODUCT (200) — PRODUCT_SK, PRODUCT_NAME, PRODUCT_TYPE, BASE_PRICE_GBP, DURATION_DAYS, ACCOMMODATION_TIER
+- DIM_DESTINATION (50) — DESTINATION_SK, DESTINATION_NAME, COUNTRY, REGION, CONTINENT, TIER
+- DIM_DATE (4,018) — DATE_SK, FULL_DATE, YEAR, MONTH_NAME, QUARTER_NAME, IS_PEAK_SEASON
+- DIM_AGENT (20), DIM_CHANNEL (4)
 
-=== GOLD LAYER (star schema) ===
+VIEWS: RPT_GROUP_KPI, RPT_BRAND_MONTHLY, RPT_BRAND_DESTINATIONS, RPT_OVERVIEW_KPI, RPT_MONTHLY_REVENUE, RPT_CUSTOMER_LTV, RPT_TOP_PRODUCTS
 
-FCT_BOOKING — 26,900 rows
-  BOOKING_SK, BOOKING_DATE_SK, TRAVEL_DATE_SK, CUSTOMER_SK, PRODUCT_SK,
-  DESTINATION_SK, AGENT_SK, CHANNEL_SK, BRAND_SK,
-  BOOKING_REF, BOOKING_STATUS (Confirmed/Completed/Cancelled/Pending),
-  CANCELLATION_REASON, INSURANCE_INCLUDED, CURRENCY,
-  TOTAL_VALUE_GBP, DEPOSIT_AMOUNT_GBP, MARGIN_PCT, MARGIN_GBP,
-  NUM_PASSENGERS, DURATION_DAYS, EXCHANGE_RATE
+KNOWLEDGE_BASE.DOCUMENTS — vectorised knowledge about DERTOUR Group, architecture, meetings
 
-DIM_BRAND — 10 rows
-  BRAND_SK, BRAND_CODE, BRAND_NAME (Kuoni/Apollo/DERTOUR/ITS/Prijsvrij Vakanties/Exim Tours/Fischer/Helvetic Tours/Meiers Weltreisen/D-reizen),
-  REGION, MARKET, BRAND_TYPE, HQ_COUNTRY, IS_ACTIVE
-
-DIM_CUSTOMER — 2,000 rows
-  CUSTOMER_SK, CUSTOMER_BK, FIRST_NAME, LAST_NAME, EMAIL, PHONE,
-  DATE_OF_BIRTH, CITY, POSTCODE, COUNTRY, JOIN_DATE,
-  SEGMENT (Explorer/Premium/Budget/Family/Adventure), LOYALTY_TIER (Bronze/Silver/Gold/Platinum),
-  TRAVEL_HISTORY_CNT, GDPR_CONSENT
-
-DIM_PRODUCT — 200 rows
-  PRODUCT_SK, PRODUCT_BK, PRODUCT_NAME, PRODUCT_TYPE (Beach/Adventure/Cultural/Cruise/Safari/Ski/City Break),
-  DURATION_DAYS, BASE_PRICE_GBP, PRICE_BAND, ACCOMMODATION_TIER, ALL_INCLUSIVE, INCLUDED_FLIGHTS
-
-DIM_DESTINATION — 50 rows
-  DESTINATION_SK, DESTINATION_BK, DESTINATION_NAME, COUNTRY, REGION, CONTINENT,
-  TIER (Budget/Standard/Premium/Luxury), AVG_DURATION_DAYS, FLIGHT_HRS_FROM_LHR, VISA_REQUIRED
-
-DIM_AGENT — 20 rows
-  AGENT_SK, AGENT_BK, AGENT_NAME, EMAIL, BRANCH_CODE, BRANCH_NAME, REGION, SPECIALISATION
-
-DIM_CHANNEL — 4 rows
-  CHANNEL_SK, CHANNEL_NAME, CHANNEL_TYPE, IS_DIGITAL
-
-DIM_DATE — 4,018 rows
-  DATE_SK, FULL_DATE, YEAR, QUARTER, QUARTER_NAME, MONTH_NUM, MONTH_NAME, WEEK_NUM,
-  DAY_OF_WEEK, DAY_NAME, IS_WEEKEND, IS_PEAK_SEASON
-
-=== PRE-BUILT VIEWS ===
-GOLD.RPT_GROUP_KPI — Brand-level KPIs (revenue, bookings, margins, cancel rate)
-GOLD.RPT_BRAND_MONTHLY — Monthly revenue by brand
-GOLD.RPT_BRAND_DESTINATIONS — Top destinations by brand
-GOLD.RPT_OVERVIEW_KPI — Overall KPIs
-GOLD.RPT_MONTHLY_REVENUE — Monthly revenue trend
-GOLD.RPT_CUSTOMER_LTV — Customer lifetime value
-GOLD.RPT_TOP_PRODUCTS — Best selling products
-
-RULES:
-- Always use KUONI_DEMO.GOLD schema for queries
-- Join FCT_BOOKING to dimension tables using _SK keys
-- Currency values are in GBP
-- Return at most 20 rows
-- Format large numbers nicely
-- If unsure, use the pre-built RPT_ views
+RULES: Use KUONI_DEMO.GOLD schema. Join on _SK keys. Values in GBP. Max 20 rows.
 """
 
 
-def get_snowflake_conn():
+def get_conn():
     return snowflake.connector.connect(
         account=os.environ.get('SNOWFLAKE_ACCOUNT', 'lqpklal-fl98075'),
         user=os.environ.get('SNOWFLAKE_USER', 'habaclaw'),
@@ -84,109 +47,221 @@ def get_snowflake_conn():
     )
 
 
-def generate_sql(question: str) -> str:
-    """Use OpenAI to generate SQL from natural language."""
-    api_key = os.environ.get('OPENAI_API_KEY', '')
-    if not api_key:
-        return None
-
-    resp = requests.post(
-        'https://api.openai.com/v1/chat/completions',
-        headers={'Authorization': f'Bearer {api_key}'},
-        json={
-            'model': 'gpt-5.4-mini',
-            'messages': [
-                {'role': 'system', 'content': SCHEMA_CONTEXT + "\n\nGenerate a single Snowflake SQL query to answer the user's question. Return ONLY the SQL, no explanation."},
-                {'role': 'user', 'content': question}
-            ],
-            'temperature': 0.1,
-            'max_tokens': 500,
-        },
-        timeout=15,
-    )
-    if resp.status_code != 200:
-        logger.error(f"OpenAI error: {resp.status_code} {resp.text[:200]}")
-        return None
-
-    sql = resp.json()['choices'][0]['message']['content'].strip()
-    # Clean markdown code blocks
-    if sql.startswith('```'):
-        sql = sql.split('\n', 1)[1] if '\n' in sql else sql[3:]
-    if sql.endswith('```'):
-        sql = sql[:-3]
-    sql = sql.strip()
-    return sql
-
-
-def generate_answer(question: str, sql: str, columns: list, rows: list) -> str:
-    """Use OpenAI to generate a natural language answer from query results."""
-    api_key = os.environ.get('OPENAI_API_KEY', '')
-    if not api_key:
-        return format_basic_answer(columns, rows)
-
-    # Format results as table
-    result_text = f"Columns: {', '.join(columns)}\n"
-    for row in rows[:20]:
-        result_text += f"{row}\n"
-
-    resp = requests.post(
-        'https://api.openai.com/v1/chat/completions',
-        headers={'Authorization': f'Bearer {api_key}'},
-        json={
-            'model': 'gpt-5.4-mini',
-            'messages': [
-                {'role': 'system', 'content': "You are a data analyst for DERTOUR Group. Give a clear, concise answer based on the query results. Use numbers, percentages, and comparisons. Be specific. 2-4 sentences max."},
-                {'role': 'user', 'content': f"Question: {question}\n\nSQL: {sql}\n\nResults:\n{result_text}"}
-            ],
-            'temperature': 0.3,
-            'max_tokens': 300,
-        },
-        timeout=15,
-    )
-    if resp.status_code == 200:
-        return resp.json()['choices'][0]['message']['content'].strip()
-    return format_basic_answer(columns, rows)
-
-
-def format_basic_answer(columns, rows):
-    if not rows:
-        return "No results found."
-    if len(rows) == 1 and len(columns) == 1:
-        return str(rows[0][0])
-    lines = [', '.join(str(v) for v in row) for row in rows[:10]]
-    return '\n'.join(lines)
-
-
-def ask(question: str) -> dict:
-    """Main entry: question → SQL → execute → answer."""
+def search_knowledge(question: str, top_k: int = 3) -> list:
+    """Vector similarity search against knowledge base."""
     try:
-        sql = generate_sql(question)
-        if not sql:
-            return {'error': 'Could not generate SQL', 'sql': None, 'answer': None}
-
-        conn = get_snowflake_conn()
+        conn = get_conn()
         cur = conn.cursor()
         cur.execute("USE WAREHOUSE COMPUTE_WH")
-        cur.execute(sql)
-        columns = [d[0] for d in cur.description]
-        rows = cur.fetchall()
+        cur.execute("""
+            SELECT TITLE, CONTENT, DOC_TYPE, SOURCE,
+                   VECTOR_COSINE_SIMILARITY(EMBEDDING,
+                       SNOWFLAKE.CORTEX.EMBED_TEXT_768('snowflake-arctic-embed-m', %s)
+                   ) AS similarity
+            FROM KUONI_DEMO.KNOWLEDGE_BASE.DOCUMENTS
+            ORDER BY similarity DESC
+            LIMIT %s
+        """, (question, top_k))
+        results = []
+        for r in cur.fetchall():
+            if r[4] > 0.3:  # similarity threshold
+                results.append({'title': r[0], 'content': r[1], 'type': r[2], 'source': r[3], 'score': float(r[4])})
         conn.close()
-
-        # Convert Decimal/date to JSON-serializable
-        clean_rows = []
-        for row in rows:
-            clean_rows.append([float(v) if hasattr(v, 'as_tuple') else str(v) if hasattr(v, 'isoformat') else v for v in row])
-
-        answer = generate_answer(question, sql, columns, clean_rows)
-
-        return {
-            'question': question,
-            'sql': sql,
-            'columns': columns,
-            'rows': clean_rows[:20],
-            'row_count': len(rows),
-            'answer': answer,
-        }
+        return results
     except Exception as e:
-        logger.error(f"Chatbot error: {e}")
-        return {'error': str(e), 'sql': sql if 'sql' in dir() else None, 'answer': None}
+        logger.error(f"Knowledge search error: {e}")
+        return []
+
+
+def classify_intent(question: str) -> str:
+    """Classify: 'sql' (needs data query), 'knowledge' (use RAG), 'both', or 'image'."""
+    q = question.lower()
+    sql_signals = ['revenue', 'booking', 'how many', 'total', 'average', 'count', 'top', 'compare', 'trend', 'monthly', 'quarterly', 'by brand', 'cancellation', 'customer', 'destination', 'margin']
+    knowledge_signals = ['what is dertour', 'who', 'structure', 'recommend', 'roadmap', 'meeting', 'architecture', 'explain', 'dorking', 'brand overview']
+    
+    has_sql = any(s in q for s in sql_signals)
+    has_knowledge = any(s in q for s in knowledge_signals)
+    
+    if has_sql and has_knowledge:
+        return 'both'
+    elif has_sql:
+        return 'sql'
+    else:
+        return 'knowledge'
+
+
+def generate_sql(question: str, context: str = '') -> str:
+    """Generate Snowflake SQL from natural language."""
+    messages = [
+        {'role': 'system', 'content': SCHEMA_CONTEXT + "\n\nGenerate a single Snowflake SQL query. Return ONLY the SQL."},
+    ]
+    if context:
+        messages.append({'role': 'system', 'content': f"Additional context:\n{context}"})
+    messages.append({'role': 'user', 'content': question})
+
+    resp = requests.post('https://api.openai.com/v1/chat/completions',
+        headers={'Authorization': f'Bearer {OPENAI_KEY}'},
+        json={'model': MODEL, 'messages': messages, 'temperature': 0.1, 'max_tokens': 500},
+        timeout=15)
+    if resp.status_code != 200:
+        return None
+    sql = resp.json()['choices'][0]['message']['content'].strip()
+    for prefix in ['```sql', '```']:
+        if sql.startswith(prefix): sql = sql[len(prefix):]
+    if sql.endswith('```'): sql = sql[:-3]
+    return sql.strip()
+
+
+def run_sql(sql: str) -> dict:
+    """Execute SQL and return columns + rows."""
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute("USE WAREHOUSE COMPUTE_WH")
+    cur.execute(sql)
+    columns = [d[0] for d in cur.description]
+    rows = cur.fetchall()
+    conn.close()
+    # JSON-safe
+    clean = []
+    for row in rows[:20]:
+        clean.append([float(v) if hasattr(v, 'as_tuple') else str(v) if hasattr(v, 'isoformat') else v for v in row])
+    return {'columns': columns, 'rows': clean, 'row_count': len(rows)}
+
+
+def generate_answer(question: str, sql: str = None, data: dict = None, knowledge: list = None, image_desc: str = None) -> str:
+    """Generate natural language answer combining all sources."""
+    system = "You are Andrita, the DERTOUR Group AI data analyst. Give clear, specific answers with numbers. 2-4 sentences max. Be conversational but professional."
+    
+    context_parts = []
+    if knowledge:
+        context_parts.append("KNOWLEDGE BASE:\n" + "\n".join(f"- {k['title']}: {k['content'][:200]}" for k in knowledge))
+    if sql and data:
+        result_text = f"SQL: {sql}\nColumns: {', '.join(data['columns'])}\n"
+        for row in data['rows'][:10]:
+            result_text += f"{row}\n"
+        context_parts.append(f"QUERY RESULTS:\n{result_text}")
+    if image_desc:
+        context_parts.append(f"IMAGE ANALYSIS:\n{image_desc}")
+
+    messages = [
+        {'role': 'system', 'content': system},
+        {'role': 'user', 'content': f"Question: {question}\n\n{''.join(context_parts)}"}
+    ]
+
+    resp = requests.post('https://api.openai.com/v1/chat/completions',
+        headers={'Authorization': f'Bearer {OPENAI_KEY}'},
+        json={'model': MODEL, 'messages': messages, 'temperature': 0.3, 'max_tokens': 400},
+        timeout=15)
+    if resp.status_code == 200:
+        return resp.json()['choices'][0]['message']['content'].strip()
+    return "I couldn't generate an answer. Please try rephrasing."
+
+
+def analyse_image(image_b64: str, question: str) -> str:
+    """Analyse an image using GPT-5.4 vision."""
+    resp = requests.post('https://api.openai.com/v1/chat/completions',
+        headers={'Authorization': f'Bearer {OPENAI_KEY}'},
+        json={
+            'model': MODEL_VISION,
+            'messages': [{
+                'role': 'user',
+                'content': [
+                    {'type': 'text', 'text': f"You are a DERTOUR Group data analyst. {question}"},
+                    {'type': 'image_url', 'image_url': {'url': f"data:image/jpeg;base64,{image_b64}"}}
+                ]
+            }],
+            'max_tokens': 500
+        }, timeout=30)
+    if resp.status_code == 200:
+        return resp.json()['choices'][0]['message']['content'].strip()
+    return None
+
+
+def save_chat(session_id: str, role: str, message: str, sql: str = None, sources: list = None):
+    """Save to conversation history."""
+    try:
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute("USE WAREHOUSE COMPUTE_WH")
+        cur.execute("""
+            INSERT INTO KUONI_DEMO.KNOWLEDGE_BASE.CHAT_HISTORY 
+            (SESSION_ID, ROLE, MESSAGE, SQL_GENERATED, SOURCES_USED)
+            VALUES (%s, %s, %s, %s, PARSE_JSON(%s))
+        """, (session_id, role, message, sql, json.dumps(sources or [])))
+        conn.close()
+    except Exception as e:
+        logger.error(f"Save chat error: {e}")
+
+
+def ask(question: str, session_id: str = None, image: str = None) -> dict:
+    """Main entry: question (+ optional image) → intelligent answer."""
+    if not session_id:
+        session_id = str(uuid.uuid4())[:8]
+
+    try:
+        result = {'question': question, 'session_id': session_id, 'sources': []}
+
+        # Image analysis
+        image_desc = None
+        if image:
+            image_desc = analyse_image(image, question)
+            result['image_analysis'] = image_desc
+            result['sources'].append('vision')
+
+        # RAG search
+        knowledge = search_knowledge(question)
+        if knowledge:
+            result['knowledge'] = [{'title': k['title'], 'score': round(k['score'], 3)} for k in knowledge]
+            result['sources'].append('knowledge_base')
+
+        # SQL generation + execution
+        intent = classify_intent(question)
+        sql = None
+        data = None
+        
+        if intent in ('sql', 'both'):
+            kb_context = "\n".join(k['content'][:150] for k in knowledge) if knowledge else ''
+            sql = generate_sql(question, kb_context)
+            if sql:
+                try:
+                    data = run_sql(sql)
+                    result['sql'] = sql
+                    result['columns'] = data['columns']
+                    result['rows'] = data['rows']
+                    result['row_count'] = data['row_count']
+                    result['sources'].append('snowflake')
+                except Exception as e:
+                    result['sql_error'] = str(e)
+                    logger.error(f"SQL execution error: {e}")
+
+        # Generate answer
+        answer = generate_answer(question, sql, data, knowledge, image_desc)
+        result['answer'] = answer
+
+        # Save to history
+        save_chat(session_id, 'user', question)
+        save_chat(session_id, 'assistant', answer, sql, result['sources'])
+
+        return result
+
+    except Exception as e:
+        logger.error(f"Ask error: {e}")
+        return {'error': str(e), 'question': question}
+
+
+def add_document(title: str, content: str, doc_type: str = 'text', source: str = '', tags: list = None) -> bool:
+    """Add a document to the knowledge base."""
+    try:
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute("USE WAREHOUSE COMPUTE_WH")
+        cur.execute("""
+            INSERT INTO KUONI_DEMO.KNOWLEDGE_BASE.DOCUMENTS (TITLE, CONTENT, DOC_TYPE, SOURCE, TAGS, EMBEDDING)
+            SELECT %s, %s, %s, %s, PARSE_JSON(%s),
+                   SNOWFLAKE.CORTEX.EMBED_TEXT_768('snowflake-arctic-embed-m', %s)
+        """, (title, content, doc_type, source, json.dumps(tags or []), content))
+        conn.close()
+        return True
+    except Exception as e:
+        logger.error(f"Add doc error: {e}")
+        return False
