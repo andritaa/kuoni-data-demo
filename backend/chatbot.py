@@ -101,7 +101,7 @@ def generate_sql(question: str, context: str = '') -> str:
 
     resp = requests.post('https://api.openai.com/v1/chat/completions',
         headers={'Authorization': f'Bearer {OPENAI_KEY}'},
-        json={'model': MODEL, 'messages': messages, 'temperature': 0.1, 'max_tokens': 500},
+        json={'model': MODEL, 'messages': messages, 'temperature': 0.1, 'max_completion_tokens': 500},
         timeout=15)
     if resp.status_code != 200:
         return None
@@ -150,7 +150,7 @@ def generate_answer(question: str, sql: str = None, data: dict = None, knowledge
 
     resp = requests.post('https://api.openai.com/v1/chat/completions',
         headers={'Authorization': f'Bearer {OPENAI_KEY}'},
-        json={'model': MODEL, 'messages': messages, 'temperature': 0.3, 'max_tokens': 400},
+        json={'model': MODEL, 'messages': messages, 'temperature': 0.3, 'max_completion_tokens': 400},
         timeout=15)
     if resp.status_code == 200:
         return resp.json()['choices'][0]['message']['content'].strip()
@@ -170,7 +170,7 @@ def analyse_image(image_b64: str, question: str) -> str:
                     {'type': 'image_url', 'image_url': {'url': f"data:image/jpeg;base64,{image_b64}"}}
                 ]
             }],
-            'max_tokens': 500
+            'max_completion_tokens': 500
         }, timeout=30)
     if resp.status_code == 200:
         return resp.json()['choices'][0]['message']['content'].strip()
