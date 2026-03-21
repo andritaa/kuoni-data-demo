@@ -94,7 +94,7 @@ def generate_sql(question: str) -> str:
         'https://api.openai.com/v1/chat/completions',
         headers={'Authorization': f'Bearer {api_key}'},
         json={
-            'model': 'gpt-4o-mini',
+            'model': 'gpt-5.4-mini',
             'messages': [
                 {'role': 'system', 'content': SCHEMA_CONTEXT + "\n\nGenerate a single Snowflake SQL query to answer the user's question. Return ONLY the SQL, no explanation."},
                 {'role': 'user', 'content': question}
@@ -133,7 +133,7 @@ def generate_answer(question: str, sql: str, columns: list, rows: list) -> str:
         'https://api.openai.com/v1/chat/completions',
         headers={'Authorization': f'Bearer {api_key}'},
         json={
-            'model': 'gpt-4o-mini',
+            'model': 'gpt-5.4-mini',
             'messages': [
                 {'role': 'system', 'content': "You are a data analyst for DERTOUR Group. Give a clear, concise answer based on the query results. Use numbers, percentages, and comparisons. Be specific. 2-4 sentences max."},
                 {'role': 'user', 'content': f"Question: {question}\n\nSQL: {sql}\n\nResults:\n{result_text}"}
