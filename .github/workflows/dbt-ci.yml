@@ -1,0 +1,49 @@
+name: dbt CI
+
+on:
+  pull_request:
+    paths: ['dbt/**']
+  push:
+    branches: [main]
+    paths: ['dbt/**']
+
+env:
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+  SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+  SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+
+jobs:
+  dbt-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dbt
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt
+        run: pip install dbt-snowflake
+
+      - name: dbt deps
+        run: dbt deps
+
+      - name: dbt compile (PR only)
+        if: github.event_name == 'pull_request'
+        run: dbt compile --target dev
+
+      - name: dbt test (PR only)
+        if: github.event_name == 'pull_request'
+        run: dbt test --target dev
+
+      - name: dbt run (main only)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: dbt run --target prod
+
+      - name: dbt test (main only)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: dbt test --target prod

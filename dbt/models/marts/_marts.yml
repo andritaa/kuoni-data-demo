@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: fct_bookings
+    description: "Enriched booking fact table"
+    columns:
+      - name: booking_id
+        tests: [unique, not_null]
+      - name: total_value_gbp
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 100000
+      - name: booking_status
+        tests:
+          - accepted_values:
+              values: ['Confirmed', 'Completed', 'Cancelled', 'Pending']
+
+  - name: rpt_executive_kpis
+    description: "Executive KPI summary"
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "total_bookings > 0"
+
+  - name: rpt_monthly_revenue
+    description: "Monthly revenue trend"
+    columns:
+      - name: month
+        tests: [unique, not_null]
+
+  - name: rpt_customer_ltv
+    description: "Customer lifetime value"
+    columns:
+      - name: customer_id
+        tests: [unique, not_null]
+
+  - name: rpt_destination_performance
+    description: "Destination analysis"
+    columns:
+      - name: destination_name
+        tests: [not_null]

@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: KUONI_DEMO
+    schema: BRONZE
+    description: "Raw ingested data from source systems"
+    tables:
+      - name: raw_bookings
+        description: "Raw booking transactions from all brands"
+        columns:
+          - name: booking_id
+            tests: [unique, not_null]
+      - name: raw_customers
+        description: "Raw customer records"
+        columns:
+          - name: customer_id
+            tests: [unique, not_null]
+      - name: raw_products
+        description: "Travel product catalogue"
+        columns:
+          - name: product_id
+            tests: [unique, not_null]
+      - name: raw_destinations
+        description: "Destination reference data"
+      - name: raw_agents
+        description: "Travel agent/advisor data"
+      - name: raw_interactions
+        description: "Customer interaction events"

@@ -1,0 +1,7 @@
+# Copy to terraform.tfvars and fill in values
+# DO NOT commit terraform.tfvars to git
+
+snowflake_account  = "lqpklal-fl98075"
+snowflake_user     = "habaclaw"
+snowflake_password = "CHANGE_ME"
+environment        = "dev"

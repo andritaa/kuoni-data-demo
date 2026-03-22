@@ -17,3 +17,15 @@ frontend/.next/
 frontend_nextjs_backup/
 *.pack.gz
 *.pack.gz.old
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate*
+terraform/.terraform.lock.hcl
+terraform/terraform.tfvars
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+dbt/profiles.yml

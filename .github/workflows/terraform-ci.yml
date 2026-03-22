@@ -1,0 +1,38 @@
+name: Terraform CI
+
+on:
+  pull_request:
+    paths: ['terraform/**']
+  push:
+    branches: [main]
+    paths: ['terraform/**']
+
+env:
+  TF_VAR_snowflake_account: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+  TF_VAR_snowflake_user: ${{ secrets.SNOWFLAKE_USER }}
+  TF_VAR_snowflake_password: ${{ secrets.SNOWFLAKE_PASSWORD }}
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan (PR)
+        if: github.event_name == 'pull_request'
+        run: terraform plan -no-color
+
+      - name: Terraform Apply (main)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
