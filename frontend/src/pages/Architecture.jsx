@@ -41,14 +41,16 @@ const assessmentItems = [
 ]
 
 const integrations = [
+  { name: 'Dynamics 365', type: 'Source', tool: 'Native Connector / Dataverse', icon: '🟦', desc: 'CRM + ERP — sales pipeline, customer service, finance, marketing via Snowflake-Dataverse native connector (GA 2025)', color: '#0078D4' },
   { name: 'Booking Engine', type: 'Source', tool: 'Snowpipe / Kafka', icon: '✈️', desc: 'Amadeus / Travelport → real-time booking events via Snowpipe Streaming', color: '#003366' },
-  { name: 'Salesforce CRM', type: 'Source', tool: 'Fivetran', icon: '👥', desc: 'Customer 360 — contacts, leads, opportunities, cases synced hourly', color: '#00A1E0' },
-  { name: 'Finance / ERP', type: 'Source', tool: 'Fivetran / JDBC', icon: '💷', desc: 'Revenue recognition, margin data, supplier payments', color: '#2E6F8F' },
+  { name: 'Finance / ERP', type: 'Source', tool: 'Dataverse / Fivetran', icon: '💷', desc: 'Dynamics F&O or Business Central — GL, invoices, cost centres, supplier payments', color: '#2E6F8F' },
   { name: 'Web Analytics', type: 'Source', tool: 'Snowpipe', icon: '🌐', desc: 'Adobe Analytics / GA4 → clickstream, session, conversion data', color: '#4A7C9B' },
-  { name: 'Snowflake', type: 'Core', tool: 'Data Platform', icon: '❄️', desc: 'Bronze → Silver → Gold medallion layers. Central source of truth', color: '#29B5E8' },
-  { name: 'dbt Cloud', type: 'Transform', tool: 'dbt', icon: '⚙️', desc: 'SQL-first transformations, tests, lineage, documentation', color: '#FF694A' },
-  { name: 'Power BI', type: 'Consume', tool: 'DirectQuery', icon: '📊', desc: 'Executive dashboards, operational reports, self-service analytics', color: '#F2C811' },
-  { name: 'Data Governance', type: 'Govern', tool: 'Atlan / Alation', icon: '🔐', desc: 'Data catalog, lineage, PII tagging, access request workflow', color: '#8B5CF6' },
+  { name: 'Snowflake', type: 'Core', tool: 'AI Data Cloud', icon: '❄️', desc: 'Bronze → Silver → Gold medallion layers. Central source of truth. Cortex AI + vector search', color: '#29B5E8' },
+  { name: 'dbt', type: 'Transform', tool: 'dbt Core / Cloud', icon: '⚙️', desc: 'SQL-first transformations, tests, lineage, documentation. CI/CD via GitHub Actions', color: '#FF694A' },
+  { name: 'Power Platform', type: 'Consume', tool: 'Power BI + Power Apps', icon: '📊', desc: 'Executive dashboards, operational reports, Power Apps connected to Snowflake via native connector', color: '#F2C811' },
+  { name: 'AI Assistant', type: 'Consume', tool: 'GPT-5.4 + Cortex', icon: '🤖', desc: 'Natural language queries against Snowflake. RAG knowledge base with vector search. Multimodal', color: '#10B981' },
+  { name: 'Terraform', type: 'IaC', tool: 'Snowflake Provider', icon: '🏗️', desc: 'Infrastructure as Code — warehouses, RBAC, databases, schemas, grants. GitOps workflow', color: '#7B42BC' },
+  { name: 'Data Governance', type: 'Govern', tool: 'Snowflake Native', icon: '🔐', desc: 'Object tagging, dynamic data masking, row access policies, column-level security', color: '#8B5CF6' },
 ]
 
 const roadmapItems = [
@@ -149,11 +151,11 @@ export default function Architecture() {
           <p className="text-xs font-semibold text-center text-gray-500 mb-3">DATA FLOW</p>
           <div className="flex items-center justify-between flex-wrap gap-2 text-center text-xs">
             {[
-              {label:'SOURCES',items:['Booking Engine','Salesforce CRM','Finance ERP','Web Analytics'],color:TEAL},
-              {label:'INGEST',items:['Snowpipe','Fivetran','JDBC','Kafka'],color:'#8B5CF6'},
+              {label:'SOURCES',items:['Dynamics 365','Booking Engine','Finance (D365 F&O)','Web Analytics'],color:TEAL},
+              {label:'INGEST',items:['Dataverse Connector','Snowpipe','Fivetran','Kafka'],color:'#8B5CF6'},
               {label:'STORE',items:['❄️ BRONZE','❄️ SILVER','❄️ GOLD'],color:'#29B5E8'},
-              {label:'TRANSFORM',items:['dbt Cloud','Snowpark','SQL'],color:'#FF694A'},
-              {label:'CONSUME',items:['Power BI','Tableau','API','ML'],color:GOLD},
+              {label:'TRANSFORM',items:['dbt','Snowpark','Cortex AI'],color:'#FF694A'},
+              {label:'CONSUME',items:['Power BI','Power Apps','AI Chatbot','API'],color:GOLD},
             ].map((step, i, arr) => (
               <React.Fragment key={step.label}>
                 <div className="flex-1 min-w-0">
@@ -263,6 +265,78 @@ export default function Architecture() {
           <p className="text-white text-sm leading-relaxed">
             <span style={{color:GOLD}}>"</span>Data Vault gives us <strong className="text-white">resilience</strong> — if DERTOUR migrates from one booking system to another, only the Silver layer needs updating. The Star Schema gives analysts and Power BI <strong className="text-white">performance</strong> — sub-second aggregations on 8,000+ bookings. And Data Products give domain teams <strong className="text-white">ownership</strong> — the CRM team publishes Customer 360 with a GOLD SLA and PII masking, and no downstream consumer ever touches the raw tables. These aren't alternatives. They're a pipeline — and this is what a mature Snowflake platform looks like.<span style={{color:GOLD}}>"</span>
           </p>
+        </div>
+      </Section>
+
+      {/* Dynamics 365 Integration */}
+      <Section title="Dynamics 365 Integration" icon="🟦">
+        <div className="flex items-start gap-4 mb-5 p-4 rounded-xl" style={{background:'#EBF4FF',border:'1px solid #BFDBFE'}}>
+          <div className="text-2xl">💡</div>
+          <p className="text-sm text-gray-700">Snowflake and Microsoft launched a <strong>native connector for Power Platform + Dynamics 365</strong> (GA Aug 2025). This eliminates the need for middleware — Dataverse talks directly to Snowflake.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+          <div className="rounded-xl p-5 border-2 border-blue-200 bg-blue-50">
+            <p className="text-xs font-bold uppercase tracking-wider text-blue-800 mb-2">Pattern 1 — Native Connector</p>
+            <p className="text-xs font-bold text-blue-700 mb-1">Dataverse ↔ Snowflake (bidirectional)</p>
+            <p className="text-xs text-gray-600 mb-2">Zero middleware. Power Apps, Power Automate, Copilot Studio query Snowflake natively. Dynamics data flows into Snowflake automatically.</p>
+            <Badge color="green">Recommended</Badge>
+          </div>
+          <div className="rounded-xl p-5 border border-gray-200 bg-white">
+            <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Pattern 2 — Synapse Link</p>
+            <p className="text-xs font-bold text-gray-700 mb-1">Dataverse → Azure Data Lake → Snowflake</p>
+            <p className="text-xs text-gray-600 mb-2">Near real-time export via Synapse Link. Snowflake reads from external stage. Good if Azure Data Lake already exists.</p>
+            <Badge color="blue">If Azure-heavy</Badge>
+          </div>
+          <div className="rounded-xl p-5 border border-gray-200 bg-white">
+            <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Pattern 3 — ETL Tool</p>
+            <p className="text-xs font-bold text-gray-700 mb-1">Dynamics → Fivetran/Airbyte → Snowflake</p>
+            <p className="text-xs text-gray-600 mb-2">Traditional ELT. More control over scheduling and transformations. Additional tool cost.</p>
+            <Badge color="amber">Fallback</Badge>
+          </div>
+        </div>
+        <div className="rounded-xl p-4" style={{background:'#F8F6F3',border:'1px solid #E5E7EB'}}>
+          <p className="text-xs font-semibold text-center text-gray-500 mb-3">DYNAMICS 365 DATA FLOW</p>
+          <div className="flex items-center justify-between flex-wrap gap-2 text-center text-xs">
+            {[
+              {label:'DYNAMICS 365',items:['Sales (CRM)','Customer Service','Finance & Ops','Marketing'],color:'#0078D4'},
+              {label:'DATAVERSE',items:['Native Connector','Real-time sync','Entity mapping'],color:'#742774'},
+              {label:'SNOWFLAKE',items:['Bronze (raw)','Silver (cleaned)','Gold (star schema)'],color:'#29B5E8'},
+              {label:'dbt',items:['Staging models','Business logic','Testing + docs'],color:'#FF694A'},
+              {label:'CONSUMERS',items:['Power BI','AI Chatbot','Power Apps','API'],color:GOLD},
+            ].map((step, i, arr) => (
+              <React.Fragment key={step.label}>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold mb-2 py-1 px-2 rounded text-white" style={{background:step.color}}>{step.label}</div>
+                  {step.items.map(item => <div key={item} className="text-xs text-gray-600 py-0.5">{item}</div>)}
+                </div>
+                {i < arr.length - 1 && <div className="text-gray-300 text-xl flex-shrink-0">→</div>}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="rounded-lg p-4 bg-gray-50 border border-gray-200">
+            <p className="text-xs font-bold" style={{color:TEAL}}>Key Dynamics Entities → Snowflake</p>
+            <ul className="text-xs text-gray-600 mt-2 space-y-1">
+              <li>• <strong>Accounts & Contacts</strong> → DIM_CUSTOMER enrichment</li>
+              <li>• <strong>Opportunities</strong> → Sales pipeline analytics</li>
+              <li>• <strong>Cases</strong> → Customer service KPIs</li>
+              <li>• <strong>Invoices & Payments</strong> → Revenue reconciliation</li>
+              <li>• <strong>Campaigns & Leads</strong> → Marketing attribution</li>
+              <li>• <strong>Activities</strong> → Customer interaction timeline</li>
+            </ul>
+          </div>
+          <div className="rounded-lg p-4 bg-gray-50 border border-gray-200">
+            <p className="text-xs font-bold" style={{color:TEAL}}>What This Unlocks</p>
+            <ul className="text-xs text-gray-600 mt-2 space-y-1">
+              <li>• <strong>Unified Customer 360</strong> — CRM + booking + web data in one view</li>
+              <li>• <strong>Revenue reconciliation</strong> — D365 Finance ↔ booking system match</li>
+              <li>• <strong>Sales forecasting</strong> — pipeline data + historical bookings → ML</li>
+              <li>• <strong>Cross-brand analytics</strong> — Dynamics data from all 10 brands</li>
+              <li>• <strong>AI-powered insights</strong> — chatbot queries spanning CRM + DW</li>
+              <li>• <strong>Power Apps</strong> — custom apps reading Snowflake data natively</li>
+            </ul>
+          </div>
         </div>
       </Section>
 
