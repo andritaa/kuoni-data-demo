@@ -1,0 +1,35 @@
+{
+  "feature": "Add a Customer 360 page showing top customers by lifetime value with segment breakdown pie chart, booking history timeline, and loyalty tier distribution. Connect to Snowflake RPT_CUSTOMER_LTV view via the backend API. Include a search/filter by customer name and segment. Mobile responsive.",
+  "results": [
+    {
+      "chunk": 1,
+      "iterations": 2,
+      "score": 3.7,
+      "status": "below_threshold"
+    },
+    {
+      "chunk": 2,
+      "iterations": 2,
+      "score": 1.75,
+      "status": "below_threshold"
+    },
+    {
+      "chunk": 3,
+      "iterations": 2,
+      "score": 2.8,
+      "status": "below_threshold"
+    },
+    {
+      "chunk": 4,
+      "iterations": 2,
+      "score": 5,
+      "status": "below_threshold"
+    },
+    {
+      "chunk": 5,
+      "iterations": 2,
+      "score": 1.5,
+      "status": "below_threshold"
+    }
+  ]
+}

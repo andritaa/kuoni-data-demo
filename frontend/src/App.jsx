@@ -6,6 +6,7 @@ import PoCs from './pages/PoCs'
 import Tasks from './pages/Tasks'
 import Travel from './pages/Travel'
 import Chat from './pages/Chat'
+import Customer360 from './pages/Customer360'
 
 const BLUE = '#003366'
 const GOLD = '#C9A96E'
@@ -17,6 +18,7 @@ const NAV = [
   { id: 'architecture', label: '🏗️ Architecture', sub: 'Platform Strategy' },
   { id: 'products', label: '📦 Data Products', sub: 'Data Mesh Catalogue' },
   { id: 'chat', label: '🤖 Ask Andrita', sub: 'AI Data Chatbot' },
+  { id: 'customer360', label: '👤 Customer 360', sub: 'Lifetime Value' },
   { id: 'travel', label: '✈️ Travel', sub: 'Meetings & Logistics' },
 ]
 
@@ -128,6 +130,7 @@ export default function App() {
         {page === 'pocs' && <PoCs />}
         {page === 'tasks' && <Tasks />}
         {page === 'chat' && <Chat />}
+        {page === 'customer360' && <Customer360 />}
         {page === 'travel' && <Travel />}
       </main>
     </div>

@@ -1,0 +1,90 @@
+{
+  "chunks": [
+    {
+      "id": 1,
+      "title": "Add backend Customer 360 API endpoint backed by Snowflake RPT_CUSTOMER_LTV",
+      "description": "Create a new FastAPI GET endpoint that queries the Snowflake RPT_CUSTOMER_LTV view and returns Customer 360 data in a frontend-friendly shape. Support optional search/filter parameters for customer name and segment, and include top customers, segment breakdown, booking history events, and loyalty tier distribution in one response payload.",
+      "files_to_create": [
+        "backend/app/schemas/customer_360.py",
+        "backend/app/services/customer_360_service.py"
+      ],
+      "files_to_modify": [
+        "backend/app/main.py",
+        "backend/app/services/snowflake.py",
+        "backend/app/core/config.py"
+      ],
+      "acceptance_criteria": [
+        "GET /api/customers/360 exists and returns JSON from Snowflake RPT_CUSTOMER_LTV",
+        "Endpoint accepts query params for customer_name and segment filtering",
+        "Response includes top customers, segment breakdown, booking history timeline data, and loyalty tier distribution",
+        "Backend handles empty results and Snowflake errors gracefully with appropriate HTTP status codes",
+        "API uses existing Snowflake connection/config patterns and does not hardcode credentials"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Add Customer 360 page shell and navigation entry",
+      "description": "Create a new React page for Customer 360 with the portal's existing visual language, brand colors, and responsive layout. Add a navigation entry in App.jsx so the page is reachable from the portal menu and URL page parameter.",
+      "files_to_create": [
+        "frontend/src/pages/Customer360.jsx"
+      ],
+      "files_to_modify": [
+        "frontend/src/App.jsx"
+      ],
+      "acceptance_criteria": [
+        "Customer 360 appears in the app navigation and can be opened via page state and URL parameter",
+        "Page uses BLUE and GOLD brand colors and matches existing card/table styling",
+        "Layout is mobile responsive with stacked sections on small screens",
+        "Page renders a header, filter area, and placeholder sections for charts/timeline/table without breaking existing routes"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Implement Customer 360 data fetching, search/filter controls, and top customers table",
+      "description": "Wire the new page to the backend API using VITE_API_URL, add controlled inputs for customer name and segment filters, and render the top customers by lifetime value in a responsive table/card layout. Include loading, empty, and error states.",
+      "files_to_create": [],
+      "files_to_modify": [
+        "frontend/src/pages/Customer360.jsx"
+      ],
+      "acceptance_criteria": [
+        "Page fetches data from `${import.meta.env.VITE_API_URL}/api/customers/360`",
+        "Search/filter inputs update the request and refresh results",
+        "Top customers are displayed with lifetime value, segment, loyalty tier, and key summary fields",
+        "Loading, error, and no-results states are visible and user-friendly",
+        "UI remains usable on mobile with horizontal scrolling or stacked cards as needed"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Add segment breakdown pie chart and loyalty tier distribution visualization",
+      "description": "Render the segment breakdown as a pie/donut chart and the loyalty tier distribution as a compact chart or segmented summary using lightweight in-app SVG/CSS rendering or an existing chart approach already used in the project. Keep the implementation dependency-minimal and responsive.",
+      "files_to_create": [],
+      "files_to_modify": [
+        "frontend/src/pages/Customer360.jsx"
+      ],
+      "acceptance_criteria": [
+        "Segment breakdown is visualized as a pie/donut chart with labels or legend",
+        "Loyalty tier distribution is visualized clearly and matches backend data",
+        "Charts resize or reflow appropriately on mobile screens",
+        "Colors align with brand palette and maintain sufficient contrast",
+        "Charts render correctly for empty and populated datasets"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Add booking history timeline and polish responsive Customer 360 interactions",
+      "description": "Implement a booking history timeline section for the selected or top customer records, and finalize responsive behavior, accessibility, and interaction details such as selecting a customer row to inspect timeline details.",
+      "files_to_create": [],
+      "files_to_modify": [
+        "frontend/src/pages/Customer360.jsx"
+      ],
+      "acceptance_criteria": [
+        "Booking history is shown as a chronological timeline with date, booking value, and relevant metadata",
+        "Selecting a customer updates the timeline/details panel without a full page reload",
+        "Timeline is readable on mobile and desktop",
+        "Interactive elements have clear focus/hover states and accessible labels",
+        "Final page is visually consistent with the rest of the portal and does not regress existing pages"
+      ]
+    }
+  ]
+}
