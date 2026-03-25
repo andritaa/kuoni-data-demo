@@ -340,6 +340,109 @@ export default function Architecture() {
         </div>
       </Section>
 
+      {/* ML / MLflow */}
+      <Section title="ML Model Training & MLOps" icon="🧠">
+        <div className="flex items-start gap-4 mb-5 p-4 rounded-xl" style={{background:'#F0FDF4',border:'1px solid #BBF7D0'}}>
+          <div className="text-2xl">💡</div>
+          <p className="text-sm text-gray-700">Snowflake natively supports <strong>MLflow model logging + Snowpark ML</strong> for training models directly on your warehouse data — no data movement needed. Models deploy as UDFs and run at Snowflake scale.</p>
+        </div>
+
+        {/* ML Architecture Flow */}
+        <div className="rounded-xl p-4 mb-5" style={{background:'#F8F6F3',border:'1px solid #E5E7EB'}}>
+          <p className="text-xs font-semibold text-center text-gray-500 mb-3">ML PIPELINE</p>
+          <div className="flex items-center justify-between flex-wrap gap-2 text-center text-xs">
+            {[
+              {label:'FEATURES',items:['Snowpark ML','Feature Store','Gold layer tables','Cortex AI functions'],color:'#29B5E8'},
+              {label:'EXPERIMENT',items:['MLflow Tracking','Snowflake Notebooks','Hyperparameter tuning','A/B comparison'],color:'#7B42BC'},
+              {label:'TRAIN',items:['Snowpark ML Modeling','scikit-learn / XGBoost','PyTorch / TensorFlow','Snowpark Container Svc'],color:'#FF694A'},
+              {label:'REGISTER',items:['Snowflake Model Registry','MLflow pyfunc support','Version control','Lineage tracking'],color:'#10B981'},
+              {label:'DEPLOY',items:['Snowpark UDFs','Container Services (GPU)','Batch inference','Real-time scoring'],color:GOLD},
+            ].map((step, i, arr) => (
+              <React.Fragment key={step.label}>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold mb-2 py-1 px-2 rounded text-white" style={{background:step.color}}>{step.label}</div>
+                  {step.items.map(item => <div key={item} className="text-xs text-gray-600 py-0.5">{item}</div>)}
+                </div>
+                {i < arr.length - 1 && <div className="text-gray-300 text-xl flex-shrink-0">→</div>}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+          {/* Snowpark ML */}
+          <div className="rounded-xl p-5 border-2 border-green-200 bg-green-50">
+            <p className="text-xs font-bold uppercase tracking-wider text-green-800 mb-2">Snowpark ML + Model Registry</p>
+            <p className="text-xs font-bold text-green-700 mb-1">Train where your data lives</p>
+            <ul className="text-xs text-gray-600 space-y-1 mt-2">
+              <li>• <strong>Feature engineering</strong> in Snowpark Python — runs on Snowflake compute</li>
+              <li>• <strong>Preprocessing</strong> via Snowpark ML (StandardScaler, OneHotEncoder etc.)</li>
+              <li>• <strong>Training</strong> scikit-learn, XGBoost, LightGBM natively in Snowflake</li>
+              <li>• <strong>Model Registry</strong> — version, tag, deploy models as Snowpark UDFs</li>
+              <li>• <strong>GPU training</strong> via Snowpark Container Services (PyTorch, TensorFlow)</li>
+            </ul>
+            <div className="mt-3"><Badge color="green">Native — No Data Movement</Badge></div>
+          </div>
+
+          {/* MLflow Integration */}
+          <div className="rounded-xl p-5 border-2 border-purple-200 bg-purple-50">
+            <p className="text-xs font-bold uppercase tracking-wider text-purple-800 mb-2">MLflow Integration</p>
+            <p className="text-xs font-bold text-purple-700 mb-1">Experiment tracking + model management</p>
+            <ul className="text-xs text-gray-600 space-y-1 mt-2">
+              <li>• <strong>MLflow Tracking</strong> — log params, metrics, artifacts per experiment</li>
+              <li>• <strong>Log to Snowflake Registry</strong> — <code>registry.log_model(mlflow.pyfunc.load_model(...))</code></li>
+              <li>• <strong>MLflow pyfunc</strong> models deploy directly as Snowpark UDFs</li>
+              <li>• <strong>Compare experiments</strong> — A/B test model versions before promoting</li>
+              <li>• <strong>CI/CD</strong> — trigger retraining via Airflow/Astronomer, auto-deploy winners</li>
+            </ul>
+            <div className="mt-3"><Badge color="blue">MLflow + Snowflake = MLOps</Badge></div>
+          </div>
+        </div>
+
+        {/* Use Cases */}
+        <div className="rounded-lg p-4 bg-gray-50 border border-gray-200">
+          <p className="text-xs font-bold mb-3" style={{color:TEAL}}>DERTOUR ML Use Cases</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="text-xs">
+              <p className="font-bold text-gray-700">🎯 Customer Segmentation</p>
+              <p className="text-gray-500 mt-1">Cluster customers by booking behaviour, value, preferences. Train K-means / DBSCAN on Gold layer. Deploy as scoring UDF.</p>
+            </div>
+            <div className="text-xs">
+              <p className="font-bold text-gray-700">📈 Demand Forecasting</p>
+              <p className="text-gray-500 mt-1">Predict booking volumes by destination/season. Prophet or XGBoost trained on FCT_BOOKING history. Powers inventory optimisation.</p>
+            </div>
+            <div className="text-xs">
+              <p className="font-bold text-gray-700">💰 Dynamic Pricing</p>
+              <p className="text-gray-500 mt-1">Optimise package pricing based on demand, lead time, competitor data. Real-time scoring via Snowpark UDF in the booking engine.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Code Example */}
+        <div className="mt-4 rounded-xl overflow-hidden border border-gray-200">
+          <div className="px-4 py-2 bg-gray-800 text-xs text-gray-400 font-mono">Snowpark ML + MLflow → Deploy to Snowflake</div>
+          <pre className="px-4 py-3 bg-gray-900 text-xs text-green-400 overflow-x-auto font-mono leading-relaxed">{`# Feature engineering in Snowpark
+from snowflake.ml.modeling.preprocessing import StandardScaler
+from snowflake.ml.modeling.xgboost import XGBClassifier
+from snowflake.ml.registry import Registry
+
+# Train on Snowflake data (no data leaves the warehouse)
+model = XGBClassifier(input_cols=features, label_cols=["CHURN"])
+model.fit(train_df)
+
+# Log with MLflow + register in Snowflake
+import mlflow
+with mlflow.start_run():
+    mlflow.log_params({"model": "xgboost", "features": len(features)})
+    mlflow.sklearn.log_model(model, "churn_model")
+
+# Deploy as Snowpark UDF — callable from SQL
+registry = Registry(session)
+mv = registry.log_model(model, model_name="churn_predictor", version_name="v1")
+mv.run(test_df)  # Runs inference at Snowflake scale`}</pre>
+        </div>
+      </Section>
+
       {/* Roadmap */}
       <Section title="Strategic Roadmap" icon="🗺️">
         <div className="flex gap-2 mb-6">
