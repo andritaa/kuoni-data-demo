@@ -471,3 +471,63 @@ async def add_knowledge(req: AddDocRequest):
     from chatbot import add_document
     ok = add_document(req.title, req.content, req.doc_type, req.source, req.tags)
     return {"ok": ok}
+
+
+@app.get("/api/customers/ltv")
+async def customers_ltv():
+    """Customer 360 — lifetime value data from Snowflake."""
+    conn = sf.get_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute("USE WAREHOUSE COMPUTE_WH")
+            cur.execute("""
+                SELECT CUSTOMER_ID, CUSTOMER_NAME, SEGMENT AS CUSTOMER_SEGMENT, 
+                       LOYALTY_TIER, CITY, TOTAL_BOOKINGS, 
+                       LIFETIME_VALUE_GBP, AVG_BOOKING_VALUE_GBP,
+                       FIRST_BOOKING, LAST_BOOKING
+                FROM KUONI_DEMO.GOLD.RPT_CUSTOMER_LTV
+                ORDER BY LIFETIME_VALUE_GBP DESC
+                LIMIT 100
+            """)
+            cols = [d[0].lower() for d in cur.description]
+            rows = cur.fetchall()
+            result = []
+            for row in rows:
+                d = {}
+                for i, col in enumerate(cols):
+                    val = row[i]
+                    if hasattr(val, 'as_tuple'):
+                        val = float(val)
+                    elif hasattr(val, 'isoformat'):
+                        val = val.isoformat()
+                    d[col] = val
+                result.append(d)
+            cur.close()
+            conn.close()
+            return result
+        except Exception as e:
+            logging.error(f"Customer LTV error: {e}")
+            if conn:
+                conn.close()
+
+    # Mock fallback
+    import random
+    segments = ["Explorer", "Premium", "Budget", "Family", "Adventure"]
+    tiers = ["Bronze", "Silver", "Gold", "Platinum"]
+    cities = ["London", "Manchester", "Birmingham", "Edinburgh", "Bristol", "Leeds"]
+    return [
+        {
+            "customer_id": f"CUS{i:05d}",
+            "customer_name": f"Customer {i}",
+            "customer_segment": random.choice(segments),
+            "loyalty_tier": random.choice(tiers),
+            "city": random.choice(cities),
+            "total_bookings": random.randint(1, 15),
+            "lifetime_value_gbp": round(random.uniform(2000, 250000), 2),
+            "avg_booking_value_gbp": round(random.uniform(1000, 40000), 2),
+            "first_booking": "2023-01-15",
+            "last_booking": "2025-11-20"
+        }
+        for i in range(1, 51)
+    ]
