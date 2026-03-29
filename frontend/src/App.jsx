@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import AuthGate from './components/AuthGate'
 import Dashboard from './pages/Dashboard'
 import Architecture from './pages/Architecture'
 import DataProducts from './pages/DataProducts'
@@ -32,6 +33,7 @@ export default function App() {
   const navigate = (id) => { setPage(id); setMenuOpen(false) }
 
   return (
+    <AuthGate>
     <div className="min-h-screen flex flex-col md:flex-row" style={{ background: '#F8F6F3' }}>
 
       {/* Mobile header */}
@@ -137,5 +139,6 @@ export default function App() {
         {page === 'travel' && <Travel />}
       </main>
     </div>
+    </AuthGate>
   )
 }
