@@ -8,6 +8,7 @@ import Tasks from './pages/Tasks'
 import Travel from './pages/Travel'
 import Stakeholders from './pages/Stakeholders'
 import BrandOnboard from './pages/BrandOnboard'
+import StrategyMap from './pages/StrategyMap'
 import Chat from './pages/Chat'
 import Customer360 from './pages/Customer360'
 
@@ -15,6 +16,7 @@ const BLUE = '#003366'
 const GOLD = '#C9A96E'
 
 const NAV = [
+  { id: 'strategy', label: '🗺️ Strategy', sub: 'Interactive Architecture' },
   { id: 'dashboard', label: '📊 Dashboard', sub: 'Live Snowflake Data' },
   { id: 'pocs', label: '🧪 PoCs', sub: 'Proof of Concepts' },
   { id: 'tasks', label: '📋 Tasks', sub: 'Kanban Board' },
@@ -130,6 +132,7 @@ export default function App() {
           </div>
         </header>
 
+        {page === 'strategy' && <StrategyMap />}
         {page === 'dashboard' && <Dashboard />}
         {page === 'architecture' && <Architecture />}
         {page === 'products' && <DataProducts />}
