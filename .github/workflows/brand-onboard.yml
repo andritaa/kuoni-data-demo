@@ -1,0 +1,74 @@
+name: Brand Onboard CI/CD
+
+on:
+  pull_request:
+    paths: ['terraform/brands/**', 'dbt/models/brands/**']
+  push:
+    branches: [main]
+    paths: ['terraform/brands/**', 'dbt/models/brands/**']
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: eu-west-2
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+  SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+  SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+
+jobs:
+  # ─── Terraform ────────────────────────────────────
+  terraform:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        brand: [inghams]  # Add brands here as they onboard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: terraform/brands/${{ matrix.brand }}
+        run: terraform init
+
+      - name: Terraform Plan (PR)
+        if: github.event_name == 'pull_request'
+        working-directory: terraform/brands/${{ matrix.brand }}
+        run: terraform plan -var="snowflake_account=$SNOWFLAKE_ACCOUNT" -var="snowflake_user=$SNOWFLAKE_USER" -var="snowflake_password=$SNOWFLAKE_PASSWORD"
+
+      - name: Terraform Apply (main)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: terraform/brands/${{ matrix.brand }}
+        run: terraform apply -auto-approve -var="snowflake_account=$SNOWFLAKE_ACCOUNT" -var="snowflake_user=$SNOWFLAKE_USER" -var="snowflake_password=$SNOWFLAKE_PASSWORD"
+
+  # ─── dbt ──────────────────────────────────────────
+  dbt:
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install dbt-snowflake
+      - name: dbt deps
+        working-directory: dbt
+        run: dbt deps
+      - name: dbt test (PR)
+        if: github.event_name == 'pull_request'
+        working-directory: dbt
+        run: dbt test --target dev --select tag:brands
+      - name: dbt run (main)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: dbt
+        run: dbt run --target prod --select tag:brands
+
+  # ─── Deploy DAGs to MWAA ─────────────────────────
+  deploy-dags:
+    runs-on: ubuntu-latest
+    needs: [terraform, dbt]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync DAGs to S3
+        run: |
+          aws s3 sync dags/ s3://dertour-airflow-dags-804516735527/dags/ --delete
+          echo "DAGs deployed to MWAA ✅"

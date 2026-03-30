@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: "{{ brand }}_bronze"
+    database: DERTOUR_DW
+    schema: "{{ BRAND }}_BRONZE"
+    description: "Raw data for {{ brand }} brand"
+    tables:
+      - name: raw_bookings
+        description: "{{ brand }} booking transactions"
+        columns:
+          - name: booking_id
+            tests: [unique, not_null]
+      - name: raw_customers
+        description: "{{ brand }} customer records"
+        columns:
+          - name: customer_id
+            tests: [unique, not_null]
+      - name: raw_products
+        description: "{{ brand }} product catalogue"

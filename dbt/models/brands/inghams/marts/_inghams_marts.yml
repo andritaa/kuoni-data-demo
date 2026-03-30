@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: fct_inghams_bookings
+    description: "Inghams enriched bookings — brand-level data product"
+    columns:
+      - name: booking_id
+        tests: [unique, not_null]
+      - name: brand
+        tests:
+          - accepted_values:
+              values: ['inghams']
+      - name: total_value_gbp
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 100000
