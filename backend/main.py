@@ -531,3 +531,30 @@ async def customers_ltv():
         }
         for i in range(1, 51)
     ]
+
+
+# ─── BRAND ONBOARDING (REAL) ─────────────────────────────
+
+@app.post("/api/onboard/{brand}")
+async def onboard_brand_api(brand: str):
+    """Onboard a DERTOUR brand — creates REAL AWS + Snowflake resources."""
+    from onboard import onboard_brand
+    result = onboard_brand(brand)
+    return result
+
+@app.get("/api/onboard/status/{brand}")
+async def onboard_status(brand: str):
+    """Check if a brand has been onboarded."""
+    brand_upper = brand.upper().replace('-', '_').replace("'", '').replace(' ', '_')
+    try:
+        conn = sf.get_connection()
+        if conn:
+            cur = conn.cursor()
+            cur.execute("USE WAREHOUSE COMPUTE_WH")
+            cur.execute(f"SHOW SCHEMAS LIKE '{brand_upper}_%' IN DATABASE KUONI_DEMO")
+            schemas = [r[1] for r in cur.fetchall()]
+            conn.close()
+            return {"brand": brand, "onboarded": len(schemas) >= 3, "schemas": schemas}
+    except Exception:
+        pass
+    return {"brand": brand, "onboarded": False, "schemas": []}

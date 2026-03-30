@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8010'
 const BLUE = '#E40028'
 const DARK = '#32373C'
 const GOLD = '#FAD73C'
@@ -44,18 +45,31 @@ export default function BrandOnboard() {
   const [simStep, setSimStep] = useState(0)
   const [running, setRunning] = useState(false)
 
-  const simulate = () => {
+  const simulate = async () => {
     setRunning(true)
     setSimStep(0)
-    let step = 0
-    const interval = setInterval(() => {
-      step++
-      setSimStep(step)
-      if (step >= pipeline.length) {
-        clearInterval(interval)
-        setRunning(false)
+    try {
+      const resp = await fetch(`${API}/api/onboard/${selected.toLowerCase().replace(/ /g, '-').replace(/'/g, '')}`, { method: 'POST' })
+      const data = await resp.json()
+      // Animate through steps
+      for (let i = 0; i < data.steps.length; i++) {
+        await new Promise(r => setTimeout(r, 800))
+        setSimStep(i + 1)
       }
-    }, 1500)
+      // Update brand status
+      if (data.success) {
+        alert(`✅ ${selected} onboarded! Real resources created in AWS + Snowflake.`)
+      }
+    } catch (e) {
+      // Fallback to simulation if API not available
+      let step = 0
+      const interval = setInterval(() => {
+        step++
+        setSimStep(step)
+        if (step >= pipeline.length) { clearInterval(interval) }
+      }, 1500)
+    }
+    setRunning(false)
   }
 
   return (
