@@ -137,8 +137,8 @@ export default function App() {
         {page === 'tasks' && <Tasks />}
         {page === 'chat' && <Chat />}
         {page === 'customer360' && <Customer360 />}
-        {page === 'onboard' {page === 'stakeholders' && <Stakeholders />}{page === 'stakeholders' && <Stakeholders />} <BrandOnboard />}
-        {page === 'stakeholders' {page === 'stakeholders' && <Stakeholders />}{page === 'stakeholders' && <Stakeholders />} <Stakeholders />}
+        {page === 'onboard' && <BrandOnboard />}
+        {page === 'stakeholders' && <Stakeholders />}
         {page === 'travel' && <Travel />}
       </main>
     </div>
