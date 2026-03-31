@@ -191,7 +191,7 @@ def check_data(**ctx):
         database="KUONI_DEMO")
     cur = conn.cursor()
     cur.execute("USE WAREHOUSE COMPUTE_WH")
-    cur.execute(f"SELECT COUNT(*) FROM {BRAND.upper().replace('-','_')}_BRONZE.RAW_BOOKINGS")
+    cur.execute(f"SELECT COUNT(*) FROM {{BRAND.upper().replace('-','_')}_BRONZE.RAW_BOOKINGS")
     print(f"[{{BRAND}}] Bookings: {{cur.fetchone()[0]}}")
     conn.close()
 

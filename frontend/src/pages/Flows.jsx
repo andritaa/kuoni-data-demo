@@ -113,7 +113,7 @@ function DataFlow({ selected, setSelected }) {
       <Node x={240} y={120} w={140} h={70} icon="🔄" label="Airflow (MWAA)" sublabel="DAGs per brand" color="#8B5CF6" pulse />
       <Node x={240} y={220} w={140} h={55} icon="📥" label="Snowpipe" sublabel="Real-time S3→SF" color="#29B5E8" />
       <Node x={240} y={300} w={140} h={55} icon="🔌" label="Dataverse" sublabel="Native connector" color="#0078D4" />
-      <Node x={240} y={380} w={140} h={55} icon="📊" label="Fivetran" sublabel="SaaS connectors" color="#6B7280" />
+      <Node x={240} y={380} w={140} h={55} icon="📊" label="Snowpipe API" sublabel="Direct API ingest" color="#6B7280" />
 
       {/* === SNOWFLAKE COLUMN === */}
       <text x={555} y={65} textAnchor="middle" fontSize={10} fontWeight="700" fill="#29B5E8">SNOWFLAKE</text>
