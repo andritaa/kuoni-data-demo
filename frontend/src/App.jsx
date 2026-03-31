@@ -9,6 +9,7 @@ import Travel from './pages/Travel'
 import Stakeholders from './pages/Stakeholders'
 import BrandOnboard from './pages/BrandOnboard'
 import Flows from './pages/Flows'
+import AtlasVoyages from './pages/AtlasVoyages'
 import StrategyMap from './pages/StrategyMap'
 import Chat from './pages/Chat'
 import Customer360 from './pages/Customer360'
@@ -25,6 +26,7 @@ const NAV = [
   { id: 'products', label: '📦 Data Products', sub: 'Data Mesh Catalogue' },
   { id: 'chat', label: '🤖 Ask Andrita', sub: 'AI Data Chatbot' },
   { id: 'customer360', label: '👤 Customer 360', sub: 'Lifetime Value' },
+  { id: 'atlas', label: '🌍 Atlas Voyages', sub: 'Demo Brand' },
   { id: 'flows', label: '🌀 Flows', sub: 'Animated Pipelines' },
   { id: 'onboard', label: '🏗️ Onboarding', sub: 'Brand IaC Pipeline' },
   { id: 'stakeholders', label: '👥 People', sub: 'Stakeholder Map' },
@@ -142,6 +144,7 @@ export default function App() {
         {page === 'tasks' && <Tasks />}
         {page === 'chat' && <Chat />}
         {page === 'customer360' && <Customer360 />}
+        {page === 'atlas' && <AtlasVoyages />}
         {page === 'flows' && <Flows />}
         {page === 'onboard' && <BrandOnboard />}
         {page === 'stakeholders' && <Stakeholders />}

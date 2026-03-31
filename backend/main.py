@@ -558,3 +558,67 @@ async def onboard_status(brand: str):
     except Exception:
         pass
     return {"brand": brand, "onboarded": False, "schemas": []}
+
+
+# ─── ATLAS VOYAGES (DEMO BRAND) ──────────────────────────
+
+@app.get("/api/atlas/kpis")
+async def atlas_kpis():
+    conn = sf.get_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute("USE WAREHOUSE COMPUTE_WH")
+            cur.execute("SELECT * FROM KUONI_DEMO.ATLAS_VOYAGES_GOLD.V_BOOKING_KPIS")
+            cols = [d[0].lower() for d in cur.description]
+            row = cur.fetchone()
+            result = {cols[i]: float(row[i]) if hasattr(row[i], 'as_tuple') else row[i] for i in range(len(cols))}
+            conn.close()
+            return result
+        except: pass
+    return {"total_bookings": 500, "total_revenue": 3964221, "avg_value": 7928, "unique_customers": 188, "cancellations": 50}
+
+@app.get("/api/atlas/dq")
+async def atlas_dq():
+    conn = sf.get_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute("USE WAREHOUSE COMPUTE_WH")
+            cur.execute("SELECT * FROM KUONI_DEMO.ATLAS_VOYAGES_GOLD.V_DQ_SCORES")
+            cols = [d[0].lower() for d in cur.description]
+            rows = [dict(zip(cols, [float(v) if hasattr(v, 'as_tuple') else v for v in r])) for r in cur.fetchall()]
+            conn.close()
+            return rows
+        except: pass
+    return [{"table_name": "RAW_BOOKINGS", "total_rows": 500, "dq_score": 100.0}, {"table_name": "RAW_CUSTOMERS", "total_rows": 200, "dq_score": 100.0}]
+
+@app.get("/api/atlas/lineage")
+async def atlas_lineage():
+    conn = sf.get_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute("USE WAREHOUSE COMPUTE_WH")
+            cur.execute("SELECT * FROM KUONI_DEMO.ATLAS_VOYAGES_GOLD.V_LINEAGE ORDER BY records DESC LIMIT 20")
+            cols = [d[0].lower() for d in cur.description]
+            rows = [dict(zip(cols, [str(v) if hasattr(v, 'isoformat') else v for v in r])) for r in cur.fetchall()]
+            conn.close()
+            return rows
+        except: pass
+    return []
+
+@app.get("/api/atlas/customers")
+async def atlas_customers():
+    conn = sf.get_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute("USE WAREHOUSE COMPUTE_WH")
+            cur.execute("SELECT * FROM KUONI_DEMO.ATLAS_VOYAGES_GOLD.V_CUSTOMERS_MASKED LIMIT 50")
+            cols = [d[0].lower() for d in cur.description]
+            rows = [dict(zip(cols, r)) for r in cur.fetchall()]
+            conn.close()
+            return rows
+        except: pass
+    return []
