@@ -33,6 +33,21 @@ VIEWS: RPT_GROUP_KPI, RPT_BRAND_MONTHLY, RPT_BRAND_DESTINATIONS, RPT_OVERVIEW_KP
 
 KNOWLEDGE_BASE.DOCUMENTS — vectorised knowledge about DERTOUR Group, architecture, meetings
 
+=== ATLAS VOYAGES (demo brand) ===
+ATLAS_VOYAGES_GOLD.FCT_BOOKINGS — 500 rows
+  booking_id, customer_id, customer_name, destination, travel_date, return_date,
+  duration_days, passengers, total_value_gbp, value_per_person, booking_status,
+  channel (Website/Phone/Agency/App), brand, season (Peak Summer/Peak Winter/Shoulder),
+  is_cancelled (boolean)
+
+ATLAS_VOYAGES_GOLD.RPT_REVENUE_BY_DESTINATION — revenue by destination
+ATLAS_VOYAGES_GOLD.RPT_CHANNEL_PERFORMANCE — bookings, revenue, cancel_rate by channel
+ATLAS_VOYAGES_GOLD.RPT_MONTHLY_TREND — monthly bookings + revenue
+
+ATLAS_VOYAGES_DATA_PRODUCTS.DP_REVENUE_SUMMARY — mesh product (no PII)
+ATLAS_VOYAGES_DATA_PRODUCTS.DP_DESTINATION_DEMAND — mesh product
+ATLAS_VOYAGES_DATA_PRODUCTS.DP_CHANNEL_MIX — mesh product
+
 RULES: Use KUONI_DEMO.GOLD schema. Join on _SK keys. Values in GBP. Max 20 rows.
 """
 
@@ -76,7 +91,7 @@ def search_knowledge(question: str, top_k: int = 3) -> list:
 def classify_intent(question: str) -> str:
     """Classify: 'sql' (needs data query), 'knowledge' (use RAG), 'both', or 'image'."""
     q = question.lower()
-    sql_signals = ['revenue', 'booking', 'how many', 'total', 'average', 'count', 'top', 'compare', 'trend', 'monthly', 'quarterly', 'by brand', 'cancellation', 'customer', 'destination', 'margin']
+    sql_signals = ['revenue', 'booking', 'how many', 'total', 'average', 'count', 'top', 'compare', 'trend', 'monthly', 'quarterly', 'by brand', 'cancellation', 'customer', 'destination', 'margin', 'atlas', 'channel', 'cancel rate', 'value', 'passengers']
     knowledge_signals = ['what is dertour', 'who', 'structure', 'recommend', 'roadmap', 'meeting', 'architecture', 'explain', 'dorking', 'brand overview']
     
     has_sql = any(s in q for s in sql_signals)
